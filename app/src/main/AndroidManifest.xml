@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tam.aulasandroid.trabalhopratico">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TrabalhoPratico">
+        <activity android:name=".InformacaoRefeicao"
+            android:screenOrientation="sensor"
+            android:label="@string/title_activity_informacao_refeicao" />
+        <activity
+            android:name=".NovaRefeicao"
+            android:label="Nova Refeição"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".PlanoAlimentar"
+            android:label="@string/title_activity_plano_alimentar"
+            android:screenOrientation="sensor"
+            android:theme="@style/Theme.TrabalhoPratico.NoActionBar"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="sensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
