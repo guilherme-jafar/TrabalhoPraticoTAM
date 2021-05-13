@@ -7,18 +7,20 @@ import java.util.Date;
 
 public class Refeicao implements Serializable, Comparable<Refeicao>{
 
+    private String id;
     private Date hora;
     private String refeicao;
     private String informacao;
 
-    public Refeicao(Date hora, String refeicao, String informacao){
+    public Refeicao(String id,Date hora, String refeicao, String informacao){
+        this.id=id;
         this.hora = hora;
         this.refeicao = refeicao;
         this.informacao = informacao;
     }
 
     public Refeicao(){
-        this(null, "", "");
+        this("",null, "", "");
     }
 
     public Date getHora() {
@@ -43,6 +45,14 @@ public class Refeicao implements Serializable, Comparable<Refeicao>{
 //        }
 //    }
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
     public void setHora(Date hora) {
 
         this.hora = hora;

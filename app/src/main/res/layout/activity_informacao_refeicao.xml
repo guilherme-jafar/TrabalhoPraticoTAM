@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:layout_width="match_parent"-->
@@ -88,6 +89,67 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:background="@color/purple_700">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="84dp"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="248dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@+id/imageView"
+                android:text="Detalhes"
+                android:textColor="#F5FFFFFF"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="44dp"
+                android:layout_height="37dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="13dp"
+                android:onClick="endDetalhes"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="44dp"
+                android:layout_height="37dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="21dp"
+                android:onClick="Edit"
+                app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="21dp"
+                android:onClick="warning"
+                app:srcCompat="@drawable/ic_baseline_delete_24" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,7 +157,7 @@
 
             <TextView
                 android:id="@+id/textView10"
-                android:layout_width="300sp"
+                android:layout_width="108dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20sp"
@@ -103,14 +165,16 @@
                 android:textAlignment="textEnd"
                 android:textSize="@dimen/text_size" />
 
-            <TextView
+            <EditText
                 android:id="@+id/horaInfo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="20sp"
-                android:text="TextView"
-                android:textSize="@dimen/text_size" />
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:editable="false"
+                android:text="Name" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -120,7 +184,7 @@
 
             <TextView
                 android:id="@+id/textView17"
-                android:layout_width="300sp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20sp"
@@ -128,14 +192,15 @@
                 android:textAlignment="textEnd"
                 android:textSize="@dimen/text_size" />
 
-            <TextView
+            <EditText
                 android:id="@+id/refInfo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="20sp"
-                android:text="TextView"
-                android:textSize="@dimen/text_size" />
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +210,7 @@
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="300dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20sp"
@@ -153,15 +218,43 @@
                 android:textAlignment="textEnd"
                 android:textSize="@dimen/text_size" />
 
-            <TextView
+            <EditText
                 android:id="@+id/infoTxt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="20sp"
-                android:text="TextView"
-                android:textSize="@dimen/text_size" />
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="125dp">
+
+            <Button
+                android:id="@+id/saveDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="gravar"
+                app:layout_constraintBottom_toBottomOf="@+id/cancelDetails"
+                app:layout_constraintEnd_toStartOf="@+id/cancelDetails"
+                app:layout_constraintTop_toTopOf="@+id/cancelDetails" />
+
+            <Button
+                android:id="@+id/cancelDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cancelar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.767"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.506" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </ScrollView>

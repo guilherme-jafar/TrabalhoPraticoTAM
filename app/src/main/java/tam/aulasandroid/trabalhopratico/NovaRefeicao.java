@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
+import java.util.UUID;
 import java.util.logging.SimpleFormatter;
 
 public class NovaRefeicao extends AppCompatActivity {
@@ -72,6 +73,7 @@ public class NovaRefeicao extends AppCompatActivity {
          }else if (!refeicao.setRefeicao(nomeRefeicao.getText().toString())){
              Toast.makeText( getApplicationContext(), "Introduza a refeição!!" , Toast.LENGTH_LONG).show();
          }else {
+             refeicao.setId(UUID.randomUUID().toString());
              refeicao.setHora(horaEscolhida);
              refeicao.setInformacao(informacao.getText().toString());
              Intent intent = new Intent(this, PlanoAlimentar.class);
