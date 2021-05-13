@@ -32,19 +32,27 @@
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="220dp"
+                    android:layout_width="304dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingStart="20sp"
                     android:text="Nome: João Silva"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/hora"
-                    android:layout_width="wrap_content"
+<!--                <TextView-->
+<!--                    android:id="@+id/hora"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Hora: 12:45"-->
+<!--                    android:textSize="20sp" />-->
+                <TextClock
+                    android:id="@+id/textClockTime"
+                    android:layout_width="88dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hora: 12:45"
+                    android:format12Hour="hh:mm a"
+                    android:timeZone="GMT+01:00"
+                    android:paddingEnd="20sp"
                     android:textSize="20sp" />
             </LinearLayout>
 

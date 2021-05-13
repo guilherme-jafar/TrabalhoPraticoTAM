@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,11 +27,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 public class PlanoAlimentar extends AppCompatActivity {
-    private ArrayList<Refeicao>  listaRefeicao = new ArrayList<>();
+    private ArrayList<Refeicao> listaRefeicao = new ArrayList<>();
     ListView refeicaoListView;
-
     Bundle b;
     ListAdapter adapter;
+    String TAG = "Plano Alimentar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,14 @@ public class PlanoAlimentar extends AppCompatActivity {
         b = intent.getBundleExtra("bundle");
 
 
-
-            FloatingActionButton fab = findViewById(R.id.add);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(PlanoAlimentar.this, NovaRefeicao.class);
-                    startActivityForResult(i, 1);
-                }
-            });
+        FloatingActionButton fab = findViewById(R.id.add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PlanoAlimentar.this, NovaRefeicao.class);
+                startActivityForResult(i, 1);
+            }
+        });
 
 
 //        Calendar cal = Calendar.getInstance();
@@ -61,7 +61,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 //        listaRefeicao.add(new Refeicao( cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
 //        cal.set(Calendar.HOUR_OF_DAY, 16);
 //        cal.set(Calendar.MINUTE, 45);
-//
+////
 //        listaRefeicao.add(new Refeicao(cal.getTime(), "Lanche", "xdfd"));
 //
 //        cal.set(Calendar.HOUR_OF_DAY, 20);
@@ -80,7 +80,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 //        listaRefeicao.add(new Refeicao(cal.getTime(), "Almoço", "xdfd"));
 
 
-        if (b!=null) {
+        if (b != null) {
             listaRefeicao = (ArrayList<Refeicao>) b.getSerializable("plano");
             Collections.sort(listaRefeicao);
             Intent resInt = new Intent();
@@ -89,45 +89,90 @@ public class PlanoAlimentar extends AppCompatActivity {
             resInt.putExtra("bundle", b);
             setResult(RESULT_OK, resInt);
         }
-            adapter = new RefeicaoAdapater(this, listaRefeicao);
-            refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
-            refeicaoListView.setAdapter(adapter);
+        adapter = new RefeicaoAdapater(this, listaRefeicao);
+        refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
+        refeicaoListView.setAdapter(adapter);
 
-            refeicaoListView.setTextFilterEnabled(true);
+        refeicaoListView.setTextFilterEnabled(true);
 
-            refeicaoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        refeicaoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Intent intent = new Intent(PlanoAlimentar.this, InformacaoRefeicao.class);
-                    intent.putExtra("informacaoRefeicao", listaRefeicao.get(position));
-                    startActivityForResult(intent, 2);
-
-
-                }
-            });
+                Intent intent = new Intent(PlanoAlimentar.this, InformacaoRefeicao.class);
+                intent.putExtra("informacaoRefeicao", listaRefeicao.get(position));
+                startActivityForResult(intent, 2);
 
 
-        }
-        public void back (View v){
-            Intent resInt = new Intent();
-            Bundle b = new Bundle();
-            b.putSerializable("plano", listaRefeicao);
-            resInt.putExtra("bundle", b);
-            setResult(RESULT_OK, resInt);
-            finish();
-
-        }
+            }
+        });
 
 
+    }
 
-        public void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 1) {
-                if (resultCode == RESULT_OK) {
-                    Refeicao refeicao = (Refeicao) data.getSerializableExtra("novaRefeicao");
-                    listaRefeicao.add(refeicao);
+    public void back(View v) {
+        Intent resInt = new Intent();
+        Bundle b = new Bundle();
+        b.putSerializable("plano", listaRefeicao);
+        resInt.putExtra("bundle", b);
+        setResult(RESULT_OK, resInt);
+        finish();
+
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
+
+        // saves a course into the bundle as a Serializable
+        outState.putSerializable("refeicaoListView", listaRefeicao);
+    }
+
+    public void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+        Log.d(TAG, "onRestoreInstanceState");
+        listaRefeicao = (ArrayList<Refeicao>) outState.getSerializable("refeicaoListView");
+        adapter = new RefeicaoAdapater(this, listaRefeicao);
+        refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
+        refeicaoListView.setAdapter(adapter);
+
+        refeicaoListView.setTextFilterEnabled(true);
+        // retrieves the course from the bundle
+
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Refeicao refeicao = (Refeicao) data.getSerializableExtra("novaRefeicao");
+                listaRefeicao.add(refeicao);
+                Collections.sort(listaRefeicao);
+                RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
+                adapater.notifyDataSetChanged();
+                Intent resInt = new Intent();
+                Bundle b = new Bundle();
+                b.putSerializable("plano", listaRefeicao);
+                resInt.putExtra("bundle", b);
+                setResult(RESULT_OK, resInt);
+            }
+        } else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                System.out.println("ijfidg");
+                if (data.getStringExtra("tipo").equalsIgnoreCase("remover")) {
+                    Refeicao refeicao = (Refeicao) data.getSerializableExtra("EliminarRefeicao");
+                    System.out.println(refeicao.getRefeicao());
+                    for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
+                        Refeicao obj = iterator.next();
+                        if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
+                            // Remove the current element from the iterator and the list.
+                            iterator.remove();
+                        }
+                    }
+
                     Collections.sort(listaRefeicao);
+                    System.out.println(listaRefeicao);
                     RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
                     adapater.notifyDataSetChanged();
                     Intent resInt = new Intent();
@@ -137,31 +182,6 @@ public class PlanoAlimentar extends AppCompatActivity {
                     setResult(RESULT_OK, resInt);
                 }
             }
-            else if (requestCode == 2){
-                if (resultCode == RESULT_OK) {
-                    System.out.println("ijfidg");
-                    if (data.getStringExtra("tipo").equalsIgnoreCase("remover")){
-                        Refeicao refeicao = (Refeicao) data.getSerializableExtra("EliminarRefeicao");
-                        System.out.println(refeicao.getRefeicao());
-                        for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext();) {
-                            Refeicao obj= iterator.next();
-                            if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
-                                // Remove the current element from the iterator and the list.
-                                iterator.remove();
-                            }
-                        }
-
-                        Collections.sort(listaRefeicao);
-                        System.out.println(listaRefeicao);
-                        RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
-                        adapater.notifyDataSetChanged();
-                        Intent resInt = new Intent();
-                        Bundle b = new Bundle();
-                        b.putSerializable("plano", listaRefeicao);
-                        resInt.putExtra("bundle", b);
-                        setResult(RESULT_OK, resInt);
-                    }
-                }
-            }
         }
     }
+}
