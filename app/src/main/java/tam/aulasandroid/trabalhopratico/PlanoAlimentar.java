@@ -79,7 +79,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 //        cal.set(Calendar.MINUTE, 45);
 //        listaRefeicao.add(new Refeicao(cal.getTime(), "Almoço", "xdfd"));
 
-
+        refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
         if (b != null) {
             listaRefeicao = (ArrayList<Refeicao>) b.getSerializable("plano");
             Collections.sort(listaRefeicao);
@@ -88,10 +88,15 @@ public class PlanoAlimentar extends AppCompatActivity {
             b.putSerializable("plano", listaRefeicao);
             resInt.putExtra("bundle", b);
             setResult(RESULT_OK, resInt);
+
+        }else{
+            listaRefeicao=new ArrayList<Refeicao>();
+                    adapter = new RefeicaoAdapater(this, listaRefeicao);
+            refeicaoListView.setAdapter(adapter);
         }
-        adapter = new RefeicaoAdapater(this, listaRefeicao);
-        refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
-        refeicaoListView.setAdapter(adapter);
+
+
+
 
         refeicaoListView.setTextFilterEnabled(true);
 
@@ -159,10 +164,10 @@ public class PlanoAlimentar extends AppCompatActivity {
             }
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                System.out.println("ijfidg");
+
                 if (data.getStringExtra("tipo").equalsIgnoreCase("remover")) {
                     Refeicao refeicao = (Refeicao) data.getSerializableExtra("EliminarRefeicao");
-                    System.out.println(refeicao.getRefeicao());
+
                     for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
                         Refeicao obj = iterator.next();
                         if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
@@ -173,6 +178,27 @@ public class PlanoAlimentar extends AppCompatActivity {
 
                     Collections.sort(listaRefeicao);
                     System.out.println(listaRefeicao);
+                    RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
+                    adapater.notifyDataSetChanged();
+                    Intent resInt = new Intent();
+                    Bundle b = new Bundle();
+                    b.putSerializable("plano", listaRefeicao);
+                    resInt.putExtra("bundle", b);
+                    setResult(RESULT_OK, resInt);
+                }
+                else if (data.getStringExtra("tipo").equalsIgnoreCase("alterar")){
+                    Refeicao refeicao = (Refeicao) data.getSerializableExtra("AlterarRefeicao");
+                    for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
+                        Refeicao obj = iterator.next();
+                        if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
+
+                            // Remove the current element from the iterator and the list.
+                            iterator.remove();
+                        }
+                    }
+                        listaRefeicao.add(refeicao);
+                    Collections.sort(listaRefeicao);
+
                     RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
                     adapater.notifyDataSetChanged();
                     Intent resInt = new Intent();
