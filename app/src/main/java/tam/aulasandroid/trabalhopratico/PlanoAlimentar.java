@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.UUID;
 
 public class PlanoAlimentar extends AppCompatActivity {
     private ArrayList<Refeicao> listaRefeicao = new ArrayList<>();
@@ -36,7 +37,7 @@ public class PlanoAlimentar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_plano_alimentar);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,21 +55,21 @@ public class PlanoAlimentar extends AppCompatActivity {
             }
         });
 
-
+//
 //        Calendar cal = Calendar.getInstance();
 //        cal.set(Calendar.HOUR_OF_DAY, 12);
 //        cal.set(Calendar.MINUTE, 45);
-//        listaRefeicao.add(new Refeicao( cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(), cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
 //        cal.set(Calendar.HOUR_OF_DAY, 16);
 //        cal.set(Calendar.MINUTE, 45);
-////
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Lanche", "xdfd"));
+//
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Lanche", "xdfd"));
 //
 //        cal.set(Calendar.HOUR_OF_DAY, 20);
 //        cal.set(Calendar.MINUTE, 45);
 //
 //
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Jantar", "xdfd"));
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Jantar", "xdfd"));
 //
 //
 //        cal.set(Calendar.HOUR_OF_DAY, 9);
@@ -210,4 +211,44 @@ public class PlanoAlimentar extends AppCompatActivity {
             }
         }
     }
+
+    public void onStart(){  // called just after onCreate (state = Started - transient state)
+        super.onStart();
+        Log.d(TAG, "onStart");
+    }
+
+    public void onResume(){  // called just after onStart (state = Resumed - activity visible and active )
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    public void onPause(){  // called when the activity is partially hidden (state = Paused)
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    public void onStop(){ // called when the activity is completely hidden (state = Stop)
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+
+    public void onRestart(){  // called when the activity is about to return (stated = Started - transient state)
+        super.onRestart();
+        Log.d(TAG, "onRestart");
+    }
+
+    public void onDestroy(){ // called when the activity is destroyed (state = Destroyed)
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("listaRefeicao", listaRefeicao);
+        setResult(RESULT_OK, intent);
+        finish();
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+
+
+//    public void onBackPressed(){
+//
+//    }
 }
