@@ -188,6 +188,7 @@ public class PlanoAlimentar extends AppCompatActivity {
                 }
                 else if (data.getStringExtra("tipo").equalsIgnoreCase("alterar")){
                     Refeicao refeicao = (Refeicao) data.getSerializableExtra("AlterarRefeicao");
+                    if (check(refeicao)){
                     for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
                         Refeicao obj = iterator.next();
                         if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
@@ -196,7 +197,7 @@ public class PlanoAlimentar extends AppCompatActivity {
                             iterator.remove();
                         }
                     }
-                        listaRefeicao.add(refeicao);
+                        listaRefeicao.add(refeicao);}
                     Collections.sort(listaRefeicao);
 
                     RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
@@ -209,5 +210,25 @@ public class PlanoAlimentar extends AppCompatActivity {
                 }
             }
         }
+    }
+
+
+    private boolean check(Refeicao refeicao){
+        for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
+            Refeicao obj = iterator.next();
+            System.out.println("pois2");
+            if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
+                System.out.println("pois");
+                Toast.makeText( getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado" , Toast.LENGTH_LONG).show();
+                return false;
+            }
+            if (obj.getHora().equals(refeicao.getHora())){
+                System.out.println("pois2");
+                Toast.makeText( getApplicationContext(),  "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        return true;
     }
 }
