@@ -197,6 +197,7 @@ public class PlanoAlimentar extends AppCompatActivity {
                             iterator.remove();
                         }
                     }
+                        System.out.println(refeicao.getHora());
                         listaRefeicao.add(refeicao);}
                     Collections.sort(listaRefeicao);
 
@@ -216,16 +217,18 @@ public class PlanoAlimentar extends AppCompatActivity {
     private boolean check(Refeicao refeicao){
         for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
             Refeicao obj = iterator.next();
-            System.out.println("pois2");
-            if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
-                System.out.println("pois");
-                Toast.makeText( getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado" , Toast.LENGTH_LONG).show();
-                return false;
-            }
-            if (obj.getHora().equals(refeicao.getHora())){
-                System.out.println("pois2");
-                Toast.makeText( getApplicationContext(),  "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
-                return false;
+
+            if(!obj.getId().equalsIgnoreCase(refeicao.getId())) {
+                if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
+                    System.out.println("pois");
+                    Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                if (obj.getHora().equals(refeicao.getHora())) {
+                    System.out.println("pois2");
+                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
+                    return false;
+                }
             }
         }
 

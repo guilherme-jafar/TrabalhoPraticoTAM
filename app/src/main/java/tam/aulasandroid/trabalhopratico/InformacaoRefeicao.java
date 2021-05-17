@@ -30,7 +30,7 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
     private Button timePicker;
     private ImageView btnEdit;
     private int hora, minuto;
-    private Date horaEscolhida = null;
+    private Date horaEscolhida;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,7 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
             timePicker.setText(formatter.format(refeicaoInformacao.getHora()));
             refInfo.setText(refeicaoInformacao.getRefeicao());
             infoTxt.setText(refeicaoInformacao.getInformacao());
+            horaEscolhida=refeicaoInformacao.getHora();
 
         }
     }
