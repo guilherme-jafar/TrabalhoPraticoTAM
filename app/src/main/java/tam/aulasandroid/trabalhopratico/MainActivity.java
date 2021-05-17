@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         cal = Calendar.getInstance();
         hora = findViewById(R.id.textClockTime);
-        Log.d("MAin", cal.toString());
+
 
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
     public void planoAlimentarView(View v){
 
         Intent i = new Intent(MainActivity.this, PlanoAlimentar.class);
-        startActivity(i);
+        i.putExtra("listaRefeicao", listaRefeicao);
+        startActivityForResult(i,1);
 
     }
 
@@ -119,6 +120,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+
+                if (data != null){
+                    listaRefeicao = (ArrayList<Refeicao>) data.getSerializableExtra("listaRefeicaoBack");
+                    Log.e(TAG,data.getSerializableExtra("listaRefeicaoBack").toString());
+                    Collections.sort(listaRefeicao);
+                    nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
+                    horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+                    Log.e(TAG,listaRefeicao.get(numRefeicao).toString() );
+                }
+
+
+            }
+        }
+
+
+    }
+
+
     class ThreadVerificaTime extends Thread{
         int counter;
 
@@ -132,15 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
                     Date dateAtual = new Date();
 
-
-
-
 //                    Log.e(TAG+ " 1 : ", formatter.format(listaRefeicao.get(numRefeicao).getHora()));
 //                    Log.e(TAG+ " 2 : ", formatter.format(dateAtual.getTime()));
 //                    Log.e(TAG+ " 3 : ", String.valueOf(dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= 15*60*1000) );
 //                    Log.e(TAG+ " 4 : ", String.valueOf(listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime() ));
 //                    Log.e(TAG+ " 5 : ", String.valueOf(15*60*1000) );
-                    Log.e(TAG, "Thread: " + numRefeicao);
+//                    Log.e(TAG, "Thread: " + numRefeicao);
                     if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime()   >= 15*60*1000){
 
 
