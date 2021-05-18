@@ -24,7 +24,7 @@ private DialogDeleteListener listener;
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         LayoutInflater inflater= getActivity().getLayoutInflater();
         View view=inflater.inflate(R.layout.delete_alert_dialog,null);
-        builder.setView(view).setTitle("apagar Refeição").setNegativeButton("Não", new DialogInterface.OnClickListener() {
+        builder.setView(view).setTitle("Apagar Refeição").setNegativeButton("Não", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

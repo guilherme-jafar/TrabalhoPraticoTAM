@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void planoAlimentarView(View v){
 
-        Intent i = new Intent(MainActivity.this, PlanoAlimentar.class);
+        Intent i = new Intent(this, PlanoAlimentar.class);
         i.putExtra("listaRefeicao", listaRefeicao);
         startActivityForResult(i,1);
 
@@ -123,11 +123,13 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
 
+            if (resultCode == RESULT_OK) {
                 if (data != null){
-                    listaRefeicao = (ArrayList<Refeicao>) data.getSerializableExtra("listaRefeicaoBack");
-                    Log.e(TAG,data.getSerializableExtra("listaRefeicaoBack").toString());
+
+                    listaRefeicao = (ArrayList<Refeicao>) data.getExtras().getSerializable("listaRefeicaoBack");
+                    Log.e(TAG,String.valueOf(numRefeicao));
+                    Log.e(TAG,listaRefeicao.toString());
                     Collections.sort(listaRefeicao);
                     nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
                     horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );

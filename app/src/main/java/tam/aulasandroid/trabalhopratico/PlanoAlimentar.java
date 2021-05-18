@@ -53,8 +53,8 @@ public class PlanoAlimentar extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null){
-          //  Log.e(TAG + "1", "ssfsd");
+        if (extras != null) {
+            //  Log.e(TAG + "1", "ssfsd");
             listaRefeicao = (ArrayList<Refeicao>) extras.getSerializable("listaRefeicao");
 
             Collections.sort(listaRefeicao);
@@ -63,7 +63,7 @@ public class PlanoAlimentar extends AppCompatActivity {
             refeicaoListView.setAdapter(adapter);
 
 
-        }else{
+        } else {
             listaRefeicao = new ArrayList<Refeicao>();
             adapter = new RefeicaoAdapater(this, listaRefeicao);
             refeicaoListView.setAdapter(adapter);
@@ -107,7 +107,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 //        listaRefeicao.add(new Refeicao(cal.getTime(), "Almoço", "xdfd"));
 
 
-       // refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
+        // refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
 //        if (b != null) {
 //
 //            listaRefeicao = (ArrayList<Refeicao>) b.getSerializable("plano");
@@ -144,6 +144,7 @@ public class PlanoAlimentar extends AppCompatActivity {
     }
 
     public void back(View v) {
+
         Intent resInt = new Intent();
         Bundle b = new Bundle();
         b.putSerializable("plano", listaRefeicao);
@@ -153,12 +154,12 @@ public class PlanoAlimentar extends AppCompatActivity {
 
     }
 
-    public void onBackPressed(){
-        super.onBackPressed();
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Log.e(TAG, listaRefeicao.toString());
         Log.e(TAG, "back");
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("listaRefeicaoBack", listaRefeicao);
-        Log.e(TAG, "back");
         setResult(RESULT_OK, intent);
         finish();
 
@@ -191,7 +192,11 @@ public class PlanoAlimentar extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Refeicao refeicao = (Refeicao) data.getSerializableExtra("novaRefeicao");
-                listaRefeicao.add(refeicao);
+
+                if (check(refeicao)) {
+                    listaRefeicao.add(refeicao);
+                }
+
                 Collections.sort(listaRefeicao);
                 RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
                 adapater.notifyDataSetChanged();
@@ -233,36 +238,38 @@ public class PlanoAlimentar extends AppCompatActivity {
 
                                 // Remove the current element from the iterator and the list.
                                 iterator.remove();
+
                             }
                         }
                         listaRefeicao.add(refeicao);
                     }
-<<<<<<< HEAD
-                        System.out.println(refeicao.getHora());
-                        listaRefeicao.add(refeicao);}
-=======
->>>>>>> 4b06d0df0315a9ee59783e9c23852fed374f2db0
-                    Collections.sort(listaRefeicao);
 
-                    RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
-                    adapater.notifyDataSetChanged();
-                    Intent resInt = new Intent();
-                    Bundle b = new Bundle();
-                    b.putSerializable("plano", listaRefeicao);
-                    resInt.putExtra("bundle", b);
-                    setResult(RESULT_OK, resInt);
+//                    System.out.println(refeicao.getHora());
+//                    listaRefeicao.add(refeicao);
                 }
+
+                Collections.sort(listaRefeicao);
+
+                RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
+                adapater.notifyDataSetChanged();
+                Intent resInt = new Intent();
+                Bundle b = new Bundle();
+                b.putSerializable("plano", listaRefeicao);
+                resInt.putExtra("bundle", b);
+                setResult(RESULT_OK, resInt);
             }
         }
     }
 
 
+
+
     private boolean check(Refeicao refeicao) {
         for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
             Refeicao obj = iterator.next();
-<<<<<<< HEAD
 
-            if(!obj.getId().equalsIgnoreCase(refeicao.getId())) {
+
+            if (!obj.getId().equalsIgnoreCase(refeicao.getId())) {
                 if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
                     System.out.println("pois");
                     Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
@@ -273,21 +280,22 @@ public class PlanoAlimentar extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
                     return false;
                 }
-=======
-            System.out.println("pois2");
-            if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
-                System.out.println("pois");
-                Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
-                return false;
-            }
-            if (obj.getHora().equals(refeicao.getHora())) {
                 System.out.println("pois2");
-                Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
-                return false;
->>>>>>> 4b06d0df0315a9ee59783e9c23852fed374f2db0
-            }
-        }
+                if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
+                    System.out.println("pois");
+                    Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                if (obj.getHora().equals(refeicao.getHora())) {
+                    System.out.println("pois2");
+                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
+                    return false;
 
+                }
+            }
+
+
+        }
         return true;
     }
 }
