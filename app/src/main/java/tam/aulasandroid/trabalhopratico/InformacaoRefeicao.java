@@ -85,14 +85,28 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
 
 
     public void Save(View v){
-        refeicaoInformacao.setHora(horaEscolhida);
-        refeicaoInformacao.setInformacao(infoTxt.getText().toString());
-        refeicaoInformacao.setRefeicao(refInfo.getText().toString());
-        Intent intent = new Intent(this, PlanoAlimentar.class);
-        intent.putExtra("tipo","alterar");
-        intent.putExtra("AlterarRefeicao", refeicaoInformacao);
-        setResult(RESULT_OK, intent);
-        finish();
+//        refeicaoInformacao.setHora(horaEscolhida);
+//        refeicaoInformacao.setInformacao(infoTxt.getText().toString());
+//        refeicaoInformacao.setRefeicao(refInfo.getText().toString());
+//
+//        Intent intent = new Intent(this, PlanoAlimentar.class);
+//        intent.putExtra("tipo","alterar");
+//        intent.putExtra("AlterarRefeicao", refeicaoInformacao);
+//        setResult(RESULT_OK, intent);
+//        finish();
+
+        if (!refeicaoInformacao.setRefeicao(refInfo.getText().toString())){
+            Toast.makeText( getApplicationContext(), "Introduza a refeição!!" , Toast.LENGTH_LONG).show();
+        }else if (!refeicaoInformacao.setInformacao(infoTxt.getText().toString())){
+            Toast.makeText( getApplicationContext(), "Introduza a informação da refeição!!" , Toast.LENGTH_LONG).show();
+        } else {
+            refeicaoInformacao.setHora(horaEscolhida);
+            Intent intent = new Intent(this, PlanoAlimentar.class);
+            intent.putExtra("tipo","alterar");
+            intent.putExtra("AlterarRefeicao", refeicaoInformacao);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 

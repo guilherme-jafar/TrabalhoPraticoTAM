@@ -68,11 +68,12 @@ public class NovaRefeicao extends AppCompatActivity {
             Refeicao refeicao = new Refeicao();
 
 
+
          if (horaEscolhida == null){
              Toast.makeText( getApplicationContext(), "Escolha uma hora!!" , Toast.LENGTH_LONG).show();
          }else if (!refeicao.setRefeicao(nomeRefeicao.getText().toString())){
              Toast.makeText( getApplicationContext(), "Introduza a refeição!!" , Toast.LENGTH_LONG).show();
-         }else if (informacao.getText().toString().equalsIgnoreCase("")){
+         }else if (!refeicao.setInformacao(informacao.getText().toString())){
              Toast.makeText( getApplicationContext(), "Introduza a informação da refeição!!" , Toast.LENGTH_LONG).show();
          } else {
              refeicao.setId(UUID.randomUUID().toString());

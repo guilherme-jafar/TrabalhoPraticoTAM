@@ -58,11 +58,16 @@ public class Refeicao implements Serializable, Comparable<Refeicao>{
         this.hora = hora;
     }
 
-    public void setInformacao(String informacao) {
+    public boolean setInformacao(String informacao) {
+
+        if (informacao.equalsIgnoreCase("")){
+            return false;
+        }else{
+            this.informacao = informacao;
+            return true;
+        }
 
 
-
-        this.informacao = informacao;
 
     }
 
