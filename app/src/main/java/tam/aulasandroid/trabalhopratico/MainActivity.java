@@ -128,12 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 if (data != null){
 
                     listaRefeicao = (ArrayList<Refeicao>) data.getExtras().getSerializable("listaRefeicaoBack");
-                    Log.e(TAG,String.valueOf(numRefeicao));
-                    Log.e(TAG,listaRefeicao.toString());
                     Collections.sort(listaRefeicao);
                     nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
                     horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
-                    Log.e(TAG,listaRefeicao.get(numRefeicao).toString() );
                 }
 
 
@@ -157,12 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Date dateAtual = new Date();
 
-//                    Log.e(TAG+ " 1 : ", formatter.format(listaRefeicao.get(numRefeicao).getHora()));
-//                    Log.e(TAG+ " 2 : ", formatter.format(dateAtual.getTime()));
-//                    Log.e(TAG+ " 3 : ", String.valueOf(dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= 15*60*1000) );
-//                    Log.e(TAG+ " 4 : ", String.valueOf(listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime() ));
-//                    Log.e(TAG+ " 5 : ", String.valueOf(15*60*1000) );
-//                    Log.e(TAG, "Thread: " + numRefeicao);
                     if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime()   >= 15*60*1000){
 
 

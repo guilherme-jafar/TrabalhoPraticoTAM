@@ -270,28 +270,13 @@ public class PlanoAlimentar extends AppCompatActivity {
 
 
             if (!obj.getId().equalsIgnoreCase(refeicao.getId())) {
-                if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
-                    System.out.println("pois");
-                    Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                if (obj.getHora().equals(refeicao.getHora())) {
-                    System.out.println("pois2");
-                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                System.out.println("pois2");
-                if (obj.getRefeicao().equalsIgnoreCase(refeicao.getRefeicao())) {
-                    System.out.println("pois");
-                    Toast.makeText(getApplicationContext(), "Esta refeicao esta a usar um nome ja utilizado", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-                if (obj.getHora().equals(refeicao.getHora())) {
-                    System.out.println("pois2");
-                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
-                    return false;
 
+                if (obj.getHora().equals(refeicao.getHora())) {
+                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
+                    return false;
                 }
+
+
             }
 
 

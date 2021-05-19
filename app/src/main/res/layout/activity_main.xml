@@ -51,7 +51,7 @@
                     android:layout_width="88dp"
                     android:layout_height="wrap_content"
                     android:format12Hour="hh:mm a"
-                    android:timeZone="GMT+01:00"
+                    android:timeZone="GMT+00:00"
                     android:paddingEnd="20sp"
                     android:textSize="20sp" />
             </LinearLayout>

@@ -60,6 +60,8 @@ public class Refeicao implements Serializable, Comparable<Refeicao>{
 
     public void setInformacao(String informacao) {
 
+
+
         this.informacao = informacao;
 
     }
