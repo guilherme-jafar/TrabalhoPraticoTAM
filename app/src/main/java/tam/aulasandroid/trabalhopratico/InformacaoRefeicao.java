@@ -101,6 +101,7 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
             Toast.makeText( getApplicationContext(), "Introduza a informação da refeição!!" , Toast.LENGTH_LONG).show();
         } else {
             refeicaoInformacao.setHora(horaEscolhida);
+
             Intent intent = new Intent(this, PlanoAlimentar.class);
             intent.putExtra("tipo","alterar");
             intent.putExtra("AlterarRefeicao", refeicaoInformacao);

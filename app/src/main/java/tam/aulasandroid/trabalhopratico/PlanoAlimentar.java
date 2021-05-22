@@ -19,12 +19,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class PlanoAlimentar extends AppCompatActivity {
     private ArrayList<Refeicao> listaRefeicao = new ArrayList<>();
@@ -267,17 +269,18 @@ public class PlanoAlimentar extends AppCompatActivity {
     private boolean check(Refeicao refeicao) {
         for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
             Refeicao obj = iterator.next();
-
-
-            if (!obj.getId().equalsIgnoreCase(refeicao.getId())) {
-
-                if (obj.getHora().equals(refeicao.getHora())) {
-                    Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
-                    return false;
+            SimpleDateFormat fmt = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                if (fmt.format(obj.getHora()).equals(fmt.format(refeicao.getHora()))) {
+                    System.out.println(refeicao.getHora()+" "+refeicao.getId()+" "+refeicao.getRefeicao());
+                    System.out.println(obj.getHora()+" "+obj.getId()+" "+obj.getRefeicao());
+                    if (!obj.getId().equalsIgnoreCase(refeicao.getId())) {
+                        Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
+                        return false;
+                    }
                 }
 
 
-            }
+
 
 
         }

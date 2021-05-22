@@ -10,9 +10,10 @@
         android:id="@+id/textView11"
         android:layout_width="288dp"
         android:layout_height="39dp"
-        android:text="Tem acerteza que quer iliminar esta refeição ?"
+        android:text="Tem acerteza que quer  eliminar esta refeição ?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
