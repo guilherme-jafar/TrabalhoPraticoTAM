@@ -1,7 +1,9 @@
 package tam.aulasandroid.trabalhopratico;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -187,16 +189,27 @@ public class PlanoAlimentar extends AppCompatActivity {
         // retrieves the course from the bundle
 
     }
-
+    public void showToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Refeicao refeicao = (Refeicao) data.getSerializableExtra("novaRefeicao");
 
                 if (check(refeicao)) {
                     listaRefeicao.add(refeicao);
+                    ContentValues values = new ContentValues();
+                    values.put("id",refeicao.getId());
+                    values.put("hora",formatter.format(refeicao.getHora()));
+                    values.put("refeicao",refeicao.getRefeicao());
+                    values.put("informacao",refeicao.getInformacao());
+                    Uri uri = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
+                     getContentResolver().insert(uri, values);
+
                 }
 
                 Collections.sort(listaRefeicao);

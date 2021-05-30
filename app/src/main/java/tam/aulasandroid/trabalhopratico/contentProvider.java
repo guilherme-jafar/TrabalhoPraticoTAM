@@ -1,9 +1,13 @@
 package tam.aulasandroid.trabalhopratico;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
@@ -16,34 +20,65 @@ public class contentProvider extends ContentProvider {
 
     static final String PROVIDER_NAME="tam.aulasandroid.trabalhopratico.refeicao";
     static final String PATH =	"refeicao";
+    static final String PATH2 =	"historico";
+    static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH);
 
     String TAG = "Exemplo36";
 
     // this is the database stuff
     String DB_NAME = "MyDB";
     String DB_TABLE = "refeicao";
-    int DB_VERSION = 1;
+    String DB_TABLE2 = "historico";
+    int DB_VERSION = 2;
 
-    String SQL_CREATE = "CREATE TABLE refeicao (id TEXT,hora TEXT,refeicao TEXT,informacao TEXT,PRIMARY KEY(id))";
-    String SQL_CREATE2 ="CREATE TABLE historico (id TEXT,idref TEXT,estado TEXT,hora TEXT,obs TEXT,PRIMARY KEY(id));";
+
+    static final int CONTACTS = 1;
+    static final int CONTACT_ID = 2;
+
+    // This class helps to obtain the CONTENT_TYPE from the URI of the request
+    // see method getType bellow
+
+
+    String SQL_CREATE = "CREATE TABLE "+DB_TABLE+"(id TEXT,hora TEXT,refeicao TEXT,informacao TEXT,PRIMARY KEY(id))";
+    String SQL_CREATE2 ="CREATE TABLE historico (id TEXT,idref TEXT,estado TEXT,hora TEXT,dia TEXT,obs TEXT,PRIMARY KEY(id));";
 
     String SQL_DROP = "DROP TABLE IF EXISTS refeicao" ;
     String SQL_DROP2 = "DROP TABLE IF EXISTS historico";
     private SQLiteDatabase db;
+
+
+
+    private static final UriMatcher uriMatcher;
+    static{
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, PATH, CONTACTS);
+        uriMatcher.addURI(PROVIDER_NAME, PATH + "/#",CONTACT_ID);
+    }
+
+    @Override
+    public boolean onCreate() {
+        Context context = getContext();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        db = dbHelper.getWritableDatabase();
+
+        return true;
+    }
+
 
     //-----------------------------------------
     class DatabaseHelper extends SQLiteOpenHelper{
 
         DatabaseHelper(Context context){
             super(context, DB_NAME, null, DB_VERSION);
+
         }
+
 
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_CREATE);
             db.execSQL(SQL_CREATE2);
             Log.d(TAG, "Table contacts created");
-
         }
 
         @Override
@@ -53,15 +88,42 @@ public class contentProvider extends ContentProvider {
             onCreate(db);
             Log.d(TAG, "Table contacts recreated");
         }
-
     }
+
+
+
+
+
+
+
+
+    @Nullable
     @Override
-    public boolean onCreate() {
-        return false;
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        long rowID;
+
+        if (uri.toString().contains("historico")) {
+             rowID = db.insert("historico", // table
+                    null,      // null when some value is provided
+                    values);   // initial values
+
+        }else{
+             rowID = db.insert("refeicao", // table
+                    null,      // null when some value is provided
+                    values);
+        }
+        //---if added successfully---
+        if (rowID>0)
+        {Log.d(TAG, "Table contacts createdgg");
+            // obtains a new URI ending with the contact id
+            Uri contactUri = ContentUris.withAppendedId(CONTENT_URI, rowID);
+            // notifies the ContentResolver that the contents of the requested URI have changed
+            getContext().getContentResolver().notifyChange(contactUri, null);
+            // retuns the URI of the new contact
+            return contactUri;
+        }
+        throw new SQLException("Failed to insert row into " + uri);
     }
-
-
-
 
 
     @Nullable
@@ -76,11 +138,6 @@ public class contentProvider extends ContentProvider {
         return null;
     }
 
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
-    }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {

@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".contentProvider"
+            android:authorities="tam.aulasandroid.trabalhopratico.refeicao"
+            android:exported="true"></provider>
     </application>
 
 </manifest>

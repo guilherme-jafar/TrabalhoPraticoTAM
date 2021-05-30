@@ -3,7 +3,9 @@ package tam.aulasandroid.trabalhopratico;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -148,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==2){
 
             change();
+//            ContentValues values = new ContentValues();
+//            values.put("id",refeicao.getId());
+//            values.put("hora",formatter.format(refeicao.getHora()));
+//            values.put("refeicao",refeicao.getRefeicao());
+//            values.put("informacao",refeicao.getInformacao());
+//            Uri uri = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
+//            getContentResolver().insert(uri, values);
 
         }
 

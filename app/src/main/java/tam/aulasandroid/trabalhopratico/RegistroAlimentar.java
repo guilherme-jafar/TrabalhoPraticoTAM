@@ -9,6 +9,7 @@ public class RegistroAlimentar implements Serializable  {
     private String id;
     private String refId;
     private boolean estado;
+    private Date data;
     private Date hora;
     private String obs;
 
