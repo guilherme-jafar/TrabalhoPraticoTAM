@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
     private ImageView btnEdit;
     private int hora, minuto;
     private Date horaEscolhida;
+    String TAG = "Informacao do Plano Alimentar";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,27 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
         timePicker.setText(formatter.format(refeicaoInformacao.getHora()));
         refInfo.setText(refeicaoInformacao.getRefeicao());
         infoTxt.setText(refeicaoInformacao.getInformacao());
+    }
+
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        View view;
+
+        // saves a course into the bundle as a Serializable
+        outState.putSerializable("refeicao",refeicaoInformacao);
+        outState.putSerializable("hora",timePicker.getText().toString());
+        outState.putSerializable("ref",refInfo.getText().toString());
+        outState.putSerializable("info",infoTxt.getText().toString());
+
+    }
+
+    public void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+        refeicaoInformacao=(Refeicao) outState.getSerializable("refeicaoListView");
+        refInfo.setText(outState.getSerializable("ref").toString());
+        infoTxt.setText(outState.getSerializable("info").toString());
+        timePicker.setText(outState.getSerializable("hora").toString());
     }
 
 

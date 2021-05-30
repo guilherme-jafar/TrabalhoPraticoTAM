@@ -91,16 +91,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void mudarRefeicao(View v){
 
+
+        Intent i = new Intent(this, registoRefeicao.class);
+        //System.out.println(listaRefeicao.get(numRefeicao));
+        i.putExtra("Refeicao", listaRefeicao.get(numRefeicao));
+        startActivityForResult(i,2);
+
+
+
+    }
+
+    public void change(){
+
         numRefeicao++;
         if (numRefeicao >= listaRefeicao.size()){
             numRefeicao = 0;
         }
         nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
-        horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
-
-
+       horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
     }
-
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
@@ -135,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+        }
+        if(requestCode==2){
+
+            change();
+
         }
 
 

@@ -271,8 +271,7 @@ public class PlanoAlimentar extends AppCompatActivity {
             Refeicao obj = iterator.next();
             SimpleDateFormat fmt = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 if (fmt.format(obj.getHora()).equals(fmt.format(refeicao.getHora()))) {
-                    System.out.println(refeicao.getHora()+" "+refeicao.getId()+" "+refeicao.getRefeicao());
-                    System.out.println(obj.getHora()+" "+obj.getId()+" "+obj.getRefeicao());
+
                     if (!obj.getId().equalsIgnoreCase(refeicao.getId())) {
                         Toast.makeText(getApplicationContext(), "Esta hora ja esta a ser utilizada", Toast.LENGTH_LONG).show();
                         return false;
