@@ -8,7 +8,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrabalhoPratico">
-        <activity android:name=".registoRefeicao"></activity>
+        <activity android:name=".HistoricoAlimentar"></activity>
+        <activity android:name=".registoRefeicao" />
         <activity
             android:name=".InformacaoRefeicao"
             android:label="@string/title_activity_informacao_refeicao"
@@ -36,7 +37,7 @@
         <provider
             android:name=".contentProvider"
             android:authorities="tam.aulasandroid.trabalhopratico.refeicao"
-            android:exported="true"></provider>
+            android:exported="true" />
     </application>
 
 </manifest>

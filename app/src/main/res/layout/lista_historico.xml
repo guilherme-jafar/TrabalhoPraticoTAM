@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+
+    <TextView
+        android:id="@+id/hora_prevista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:paddingStart="10sp"
+        android:textSize="18sp"></TextView>
+
+    <TextView
+        android:id="@+id/refeicao_historico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingStart="30sp"
+        android:textSize="18sp"></TextView>
+
+    <TextView
+        android:id="@+id/realizada_historico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:paddingStart="30sp"
+        android:textSize="18sp"></TextView>
+
+</LinearLayout>
