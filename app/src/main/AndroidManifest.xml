@@ -8,7 +8,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrabalhoPratico">
-        <activity android:name=".HistoricoAlimentar"></activity>
+        <activity android:name=".InformacaoHistoricoRefeicao"></activity>
+        <activity android:name=".HistoricoAlimentar" />
         <activity android:name=".registoRefeicao" />
         <activity
             android:name=".InformacaoRefeicao"

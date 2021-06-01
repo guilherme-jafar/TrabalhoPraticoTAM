@@ -91,6 +91,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void historicoAlimentarView(View v){
+
+        Intent i = new Intent(this, HistoricoAlimentar.class);
+
+        startActivity(i);
+
+    }
+
     public void mudarRefeicao(View v){
 
 

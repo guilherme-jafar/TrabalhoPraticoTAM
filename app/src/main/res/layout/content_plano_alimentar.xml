@@ -49,7 +49,7 @@
             android:background="?android:attr/listDivider" />
 
         <ListView
-            android:id="@+id/lista_refeicoes"
+            android:id="@+id/lista_historico"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

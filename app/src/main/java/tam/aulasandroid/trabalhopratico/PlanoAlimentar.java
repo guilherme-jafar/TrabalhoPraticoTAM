@@ -1,20 +1,16 @@
 package tam.aulasandroid.trabalhopratico;
 
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -23,10 +19,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -63,13 +56,13 @@ public class PlanoAlimentar extends AppCompatActivity {
 
             Collections.sort(listaRefeicao);
             adapter = new RefeicaoAdapater(this, listaRefeicao);
-            refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
+            refeicaoListView = (ListView) findViewById(R.id.lista_historico);
             refeicaoListView.setAdapter(adapter);
 
 
         } else {
             listaRefeicao = new ArrayList<Refeicao>();
-            adapter = new RefeicaoAdapater(this, listaRefeicao);
+            adapter = new RefeicaoAdapater( this, listaRefeicao);
             refeicaoListView.setAdapter(adapter);
         }
 
@@ -182,7 +175,7 @@ public class PlanoAlimentar extends AppCompatActivity {
         Log.d(TAG, "onRestoreInstanceState");
         listaRefeicao = (ArrayList<Refeicao>) outState.getSerializable("refeicaoListView");
         adapter = new RefeicaoAdapater(this, listaRefeicao);
-        refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
+        refeicaoListView = (ListView) findViewById(R.id.lista_historico);
         refeicaoListView.setAdapter(adapter);
 
         refeicaoListView.setTextFilterEnabled(true);
