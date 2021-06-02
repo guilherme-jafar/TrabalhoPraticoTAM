@@ -46,6 +46,17 @@ public class registoRefeicao extends AppCompatActivity {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         timePicker = findViewById(R.id.timeInput3);
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButton = (RadioButton) findViewById(checkedId);
+
+                    timePicker.setEnabled(radioButton.getText().toString().equalsIgnoreCase("realizada"));
+
+
+
+            }
+        });
 
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
@@ -58,7 +69,7 @@ public class registoRefeicao extends AppCompatActivity {
             horaTxt.setText(
                     formatter.format(refeicao.getHora()));
 
-            horaEscolhida=refeicao.getHora();
+            horaEscolhida=null;
 
         }
     }
@@ -95,30 +106,39 @@ public class registoRefeicao extends AppCompatActivity {
         finish();
     }
 
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        View view;
+
+        outState.putSerializable("hora",timePicker.getText().toString());
+
+        outState.putSerializable("info",info.getText().toString());
+
+    }
+
+    public void onRestoreInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+
+        info.setText(outState.getSerializable("info").toString());
+        timePicker.setText(outState.getSerializable("hora").toString());
+    }
 
     public void save(View view){
 
         boolean status;
 
         int selectedId = radioGroup.getCheckedRadioButtonId();
-        if (selectedId==0){
-            Toast.makeText( getApplicationContext(), "Indique se a refeicao foi realizada" , Toast.LENGTH_LONG).show();
-        }else {
+
             radioButton = (RadioButton) findViewById(selectedId);
-            if (radioButton.getText().toString().equalsIgnoreCase("realizada")) {
-                status = true;
-            } if (horaEscolhida == null){
-                Toast.makeText( getApplicationContext(), "Escolha uma hora!!" , Toast.LENGTH_LONG).show();
-            }
-            else if(info.getText().toString()==null){
-                Toast.makeText( getApplicationContext(), "Indique alguma observação" , Toast.LENGTH_LONG).show();
-            }
+
+        if (horaEscolhida==null && radioButton.getText().toString().equalsIgnoreCase("realizada")){
+            Toast.makeText( getApplicationContext(), "Escolha uma hora!!" , Toast.LENGTH_LONG).show();
+        }
+        else if(info.getText().toString().matches("") && radioButton.getText().toString().equalsIgnoreCase("não realizada")){
+            Toast.makeText( getApplicationContext(), "Indique alguma observação" , Toast.LENGTH_LONG).show();
+        }
             else {
-                if (radioButton.getText().toString().equalsIgnoreCase("realizada")) {
-                    status = true;
-                }else {
-                    status = false;
-                }
+            status = radioButton.getText().toString().equalsIgnoreCase("realizada");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Calendar c = Calendar.getInstance();
                 String date = sdf.format(c.getTime());
@@ -138,7 +158,7 @@ public class registoRefeicao extends AppCompatActivity {
                 finish();
             }
 
-        }
+
 
 //        if (!refeicaoInformacao.setRefeicao(refInfo.getText().toString())){
 //            Toast.makeText( getApplicationContext(), "Introduza a refeição!!" , Toast.LENGTH_LONG).show();

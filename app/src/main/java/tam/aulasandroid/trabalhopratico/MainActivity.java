@@ -149,14 +149,12 @@ public class MainActivity extends AppCompatActivity {
         }
         if(requestCode==2){
 
-            change();
-//            ContentValues values = new ContentValues();
-//            values.put("id",refeicao.getId());
-//            values.put("hora",formatter.format(refeicao.getHora()));
-//            values.put("refeicao",refeicao.getRefeicao());
-//            values.put("informacao",refeicao.getInformacao());
-//            Uri uri = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
-//            getContentResolver().insert(uri, values);
+            if (data != null) {
+                if (data.getStringExtra("estado").equalsIgnoreCase("salvar")) {
+                    change();
+                }
+            }
+
 
         }
 

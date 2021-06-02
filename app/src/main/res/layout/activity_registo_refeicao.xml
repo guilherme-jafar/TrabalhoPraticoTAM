@@ -101,6 +101,7 @@
             android:id="@+id/radioButton"
             android:layout_width="match_parent"
             android:layout_height="31dp"
+            android:checked="true"
             android:text="Realizada" />
 
         <RadioButton

@@ -22,7 +22,7 @@ public class contentProvider extends ContentProvider {
     static final String PATH =	"refeicao";
     static final String PATH2 =	"historico";
     static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH);
-
+    static final Uri CONTENT_URI2 = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH2);
     String TAG = "Exemplo36";
 
     // this is the database stuff
@@ -53,6 +53,8 @@ public class contentProvider extends ContentProvider {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, PATH, CONTACTS);
         uriMatcher.addURI(PROVIDER_NAME, PATH + "/#",CONTACT_ID);
+        uriMatcher.addURI(PROVIDER_NAME, PATH2, CONTACTS);
+        uriMatcher.addURI(PROVIDER_NAME, PATH2 + "/#",CONTACT_ID);
     }
 
     @Override
@@ -141,11 +143,21 @@ public class contentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+                 db.delete(
+                "refeicao",       // table
+                selection,      // where clause
+                selectionArgs);
+
         return 0;
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        db.update(
+                "refeicao",       // table
+                values,         // new values
+                selection,      // where clause
+                selectionArgs);
         return 0;
     }
 }

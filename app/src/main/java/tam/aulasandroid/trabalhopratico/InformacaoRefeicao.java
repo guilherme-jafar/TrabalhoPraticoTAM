@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -125,6 +127,15 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
         } else {
             refeicaoInformacao.setHora(horaEscolhida);
 
+            Uri uri = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
+            String selection = "id=?";
+            String [] selectionArgs = new String[] { refeicaoInformacao.getId()};
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            ContentValues values = new ContentValues();
+            values.put("hora",formatter.format(refeicaoInformacao.getHora()));
+            values.put("refeicao",refeicaoInformacao.getRefeicao());
+            values.put("informacao",refeicaoInformacao.getInformacao());
+
             Intent intent = new Intent(this, PlanoAlimentar.class);
             intent.putExtra("tipo","alterar");
             intent.putExtra("AlterarRefeicao", refeicaoInformacao);
@@ -172,6 +183,10 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
 
     @Override
     public void ApplyChange(String res) {
+        Uri uri = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
+        String selection = "id=?";
+        String [] selectionArgs = new String[] { refeicaoInformacao.getId()};
+        getContentResolver().delete(uri,selection,selectionArgs);
 
         Intent intent = new Intent(this, PlanoAlimentar.class);
         intent.putExtra("tipo","remover");
