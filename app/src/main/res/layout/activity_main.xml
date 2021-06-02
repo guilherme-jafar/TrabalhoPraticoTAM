@@ -125,11 +125,12 @@
                         android:text="Plano" />
 
                     <Button
-                        android:id="@+id/cancelarButton22"
+                        android:id="@+id/buttonHistorico"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10sp"
                         android:layout_weight="1"
+                        android:onClick="historicoAlimentarView"
                         android:text="Histórico" />
                 </LinearLayout>
             </LinearLayout>
