@@ -79,51 +79,6 @@ public class PlanoAlimentar extends AppCompatActivity {
         });
 
 
-//        Calendar cal = Calendar.getInstance();
-//        cal.set(Calendar.HOUR_OF_DAY, 12);
-//        cal.set(Calendar.MINUTE, 45);
-//        listaRefeicao.add(new Refeicao( cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
-//        cal.set(Calendar.HOUR_OF_DAY, 16);
-//        cal.set(Calendar.MINUTE, 45);
-////
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Lanche", "xdfd"));
-//
-//        cal.set(Calendar.HOUR_OF_DAY, 20);
-//        cal.set(Calendar.MINUTE, 45);
-//
-//
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Jantar", "xdfd"));
-//
-//
-//        cal.set(Calendar.HOUR_OF_DAY, 9);
-//        cal.set(Calendar.MINUTE, 45);
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Lanche", "xdfd"));
-//
-//        cal.set(Calendar.HOUR_OF_DAY, 13);
-//        cal.set(Calendar.MINUTE, 45);
-//        listaRefeicao.add(new Refeicao(cal.getTime(), "Almoço", "xdfd"));
-
-
-        // refeicaoListView = (ListView) findViewById(R.id.lista_refeicoes);
-//        if (b != null) {
-//
-//            listaRefeicao = (ArrayList<Refeicao>) b.getSerializable("plano");
-//            Collections.sort(listaRefeicao);
-//            Intent resInt = new Intent();
-//            Bundle b = new Bundle();
-//            b.putSerializable("plano", listaRefeicao);
-//            resInt.putExtra("bundle", b);
-//            setResult(RESULT_OK, resInt);
-//
-//
-//        } else {
-//            listaRefeicao = new ArrayList<Refeicao>();
-//            adapter = new RefeicaoAdapater(this, listaRefeicao);
-//            refeicaoListView.setAdapter(adapter);
-//        }
-
-
-        //refeicaoListView.setTextFilterEnabled(true);
 
         refeicaoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

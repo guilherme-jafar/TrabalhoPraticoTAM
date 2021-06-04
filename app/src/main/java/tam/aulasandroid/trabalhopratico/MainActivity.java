@@ -5,6 +5,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout backGroundAlimentacao;
     private int countThreads = 0;
     int numRefeicao = 0;
+    //private contentProvider contentProvider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         cal = Calendar.getInstance();
         hora = findViewById(R.id.textClockTime);
+
+
 
 
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -75,8 +81,43 @@ public class MainActivity extends AppCompatActivity {
         nomeRefeicoa = findViewById(R.id.nomeRefeicao);
         horaRefeicao = findViewById(R.id.horaRefeicao);
 
+
+
         nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
         horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+
+
+        RefeicaoDBAdapter  refeicaoDBAdapter= new RefeicaoDBAdapter(this);
+
+        refeicaoDBAdapter.open();
+
+
+        Log.e(TAG,refeicaoDBAdapter.getAllRefeicoes().toString());
+
+        Cursor cursor = refeicaoDBAdapter.getAllRefeicoes();
+
+
+        if(cursor!=null){
+            if(cursor.getCount()==0){
+                Log.e(TAG,"The table is empty");
+
+                return;
+            }
+            StringBuilder sb = new StringBuilder();
+
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+
+                Log.e(TAG,"Not empry");
+                sb.append(cursor.getString(1) + "  -  " + cursor.getString(2) + "\n" );
+                Log.e(TAG,sb.toString());
+                cursor.moveToNext();
+            }
+
+
+        }
+
+        refeicaoDBAdapter.close();
 
         new ThreadVerificaTime().start();
 
