@@ -89,6 +89,10 @@
                     android:layout_width="88dp"
                     android:layout_height="wrap_content"
                     android:format12Hour="hh:mm a"
+<<<<<<< HEAD
+=======
+                    android:timeZone="GMT+01:00"
+>>>>>>> 3b9b5817b63b7025d390ac31ad28eafbf4ed86b9
                     android:paddingEnd="20sp"
                     android:textSize="20sp"
                     android:timeZone="GMT+00:00" />

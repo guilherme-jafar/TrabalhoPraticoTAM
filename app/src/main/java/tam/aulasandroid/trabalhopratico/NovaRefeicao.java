@@ -3,7 +3,9 @@ package tam.aulasandroid.trabalhopratico;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.view.View;
@@ -26,6 +28,7 @@ public class NovaRefeicao extends AppCompatActivity {
     private int hora, minuto;
     private Button timePicker;
     private Date horaEscolhida = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class NovaRefeicao extends AppCompatActivity {
                 hora = hourOfDay;
                 minuto = minute;
                 timePicker.setText(String.format(Locale.getDefault(), "%02d:%02d", hora, minute));
-                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
                 Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.HOUR_OF_DAY, hora);
                 cal.set(Calendar.MINUTE, minute);
@@ -76,9 +79,11 @@ public class NovaRefeicao extends AppCompatActivity {
          }else if (!refeicao.setInformacao(informacao.getText().toString())){
              Toast.makeText( getApplicationContext(), "Introduza a informação da refeição!!" , Toast.LENGTH_LONG).show();
          } else {
+             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
              refeicao.setId(UUID.randomUUID().toString());
              refeicao.setHora(horaEscolhida);
              refeicao.setInformacao(informacao.getText().toString());
+
              Intent intent = new Intent(this, PlanoAlimentar.class);
              intent.putExtra("novaRefeicao", refeicao);
              setResult(RESULT_OK, intent);

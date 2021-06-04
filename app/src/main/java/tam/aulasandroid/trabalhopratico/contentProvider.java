@@ -23,7 +23,8 @@ public class contentProvider extends ContentProvider {
     static final String PATH2 =	"historico";
     static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH);
     static final Uri CONTENT_URI2 = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH2);
-    String TAG = "Exemplo36";
+    String TAG = "";
+    DatabaseHelper dbHelper;
 
     // this is the database stuff
     String DB_NAME = "MyDB";
@@ -46,7 +47,15 @@ public class contentProvider extends ContentProvider {
     String SQL_DROP2 = "DROP TABLE IF EXISTS historico";
     private SQLiteDatabase db;
 
+//    public contentProvider(){
+//        Context context = getContext();
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        db = dbHelper.getWritableDatabase();
+//    }
 
+//    public contentProvider(Context ctx){
+//        dbHelper = new DatabaseHelper(getContext());
+//    }
 
     private static final UriMatcher uriMatcher;
     static{
@@ -66,12 +75,19 @@ public class contentProvider extends ContentProvider {
         return true;
     }
 
+    public void open() throws SQLException{
+        db= dbHelper.getWritableDatabase();
+    }
+
+    public void close(){
+        dbHelper.close();
+    }
 
     //-----------------------------------------
     class DatabaseHelper extends SQLiteOpenHelper{
 
         DatabaseHelper(Context context){
-            super(context, DB_NAME, null, DB_VERSION);
+            super(context, DB_TABLE, null, DB_VERSION);
 
         }
 
@@ -93,12 +109,6 @@ public class contentProvider extends ContentProvider {
     }
 
 
-
-
-
-
-
-
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
@@ -116,7 +126,7 @@ public class contentProvider extends ContentProvider {
         }
         //---if added successfully---
         if (rowID>0)
-        {Log.d(TAG, "Table contacts createdgg");
+        {Log.d(TAG, "Table created");
             // obtains a new URI ending with the contact id
             Uri contactUri = ContentUris.withAppendedId(CONTENT_URI, rowID);
             // notifies the ContentResolver that the contents of the requested URI have changed
@@ -131,6 +141,8 @@ public class contentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+
+
         return null;
     }
 
@@ -138,6 +150,22 @@ public class contentProvider extends ContentProvider {
     @Override
     public String getType(@NonNull Uri uri) {
         return null;
+    }
+
+    @Nullable
+    public Cursor getAllRefeicoes(){
+
+        Cursor cursor = db.query(
+                "refeicao",
+                new String[]{"id", "hora", "refeicao", "informacao"},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        return cursor;
     }
 
 

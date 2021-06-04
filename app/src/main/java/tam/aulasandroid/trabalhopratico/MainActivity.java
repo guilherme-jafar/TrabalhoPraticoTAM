@@ -6,7 +6,12 @@ import androidx.preference.PreferenceManager;
 
 import android.content.ContentValues;
 import android.content.Intent;
+<<<<<<< HEAD
 import android.content.SharedPreferences;
+=======
+import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
+>>>>>>> 3b9b5817b63b7025d390ac31ad28eafbf4ed86b9
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,9 +42,14 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout backGroundAlimentacao;
     private int countThreads = 0;
     int numRefeicao = 0;
+<<<<<<< HEAD
     int buffer;
     private TextView name;
     SharedPreferences pref;
+=======
+    //private contentProvider contentProvider;
+
+>>>>>>> 3b9b5817b63b7025d390ac31ad28eafbf4ed86b9
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +58,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         cal = Calendar.getInstance();
         hora = findViewById(R.id.textClockTime);
+<<<<<<< HEAD
         name=findViewById(R.id.textView9);
         name.setText(pref.getString("nome","Joao Silva"));
         buffer=Integer.parseInt(pref.getString("replay","15"));
+=======
+
+
+
+
+>>>>>>> 3b9b5817b63b7025d390ac31ad28eafbf4ed86b9
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
 
@@ -82,8 +99,43 @@ public class MainActivity extends AppCompatActivity {
         nomeRefeicoa = findViewById(R.id.nomeRefeicao);
         horaRefeicao = findViewById(R.id.horaRefeicao);
 
+
+
         nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
         horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+
+
+        RefeicaoDBAdapter  refeicaoDBAdapter= new RefeicaoDBAdapter(this);
+
+        refeicaoDBAdapter.open();
+
+
+        Log.e(TAG,refeicaoDBAdapter.getAllRefeicoes().toString());
+
+        Cursor cursor = refeicaoDBAdapter.getAllRefeicoes();
+
+
+        if(cursor!=null){
+            if(cursor.getCount()==0){
+                Log.e(TAG,"The table is empty");
+
+                return;
+            }
+            StringBuilder sb = new StringBuilder();
+
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+
+                Log.e(TAG,"Not empry");
+                sb.append(cursor.getString(1) + "  -  " + cursor.getString(2) + "\n" );
+                Log.e(TAG,sb.toString());
+                cursor.moveToNext();
+            }
+
+
+        }
+
+        refeicaoDBAdapter.close();
 
         new ThreadVerificaTime().start();
 
