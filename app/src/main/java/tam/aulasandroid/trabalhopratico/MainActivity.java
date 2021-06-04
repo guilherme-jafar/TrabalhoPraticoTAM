@@ -2,7 +2,7 @@ package tam.aulasandroid.trabalhopratico;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.preference.PreferenceManager;
+
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -97,40 +98,32 @@ public class MainActivity extends AppCompatActivity {
         nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
         horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
 
+        new ThreadVerificaTime().start();
 
-        RefeicaoDBAdapter  refeicaoDBAdapter= new RefeicaoDBAdapter(this);
+        getAllRefeicao();
 
-        refeicaoDBAdapter.open();
+    }
 
+    public void getAllRefeicao(){
+        Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
 
-        Log.e(TAG,refeicaoDBAdapter.getAllRefeicoes().toString());
-
-        Cursor cursor = refeicaoDBAdapter.getAllRefeicoes();
-
-
-        if(cursor!=null){
-            if(cursor.getCount()==0){
-                Log.e(TAG,"The table is empty");
-
+        Cursor curRes = managedQuery(uriAll, null, null, null, null);
+        Log.e(TAG, "Vazio");
+        if(curRes!=null){
+            if(curRes.getCount()==0){
+                Log.e(TAG, "Vazio");
                 return;
             }
             StringBuilder sb = new StringBuilder();
 
-            cursor.moveToFirst();
-            while(!cursor.isAfterLast()){
-
-                Log.e(TAG,"Not empry");
-                sb.append(cursor.getString(1) + "  -  " + cursor.getString(2) + "\n" );
-                Log.e(TAG,sb.toString());
-                cursor.moveToNext();
+            curRes.moveToFirst();
+            while(!curRes.isAfterLast()){
+                Log.e(TAG, curRes.getString(1) + "  -  " + curRes.getString(2) + "\n" );
+//                sb.append(curRes.getString(1) + "  -  " + curRes.getString(2) + "\n" );
+                curRes.moveToNext();
             }
 
-
         }
-
-        refeicaoDBAdapter.close();
-
-        new ThreadVerificaTime().start();
 
     }
 

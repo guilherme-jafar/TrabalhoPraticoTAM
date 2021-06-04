@@ -87,7 +87,7 @@ public class contentProvider extends ContentProvider {
     class DatabaseHelper extends SQLiteOpenHelper{
 
         DatabaseHelper(Context context){
-            super(context, DB_TABLE, null, DB_VERSION);
+            super(context, DB_NAME, null, DB_VERSION);
 
         }
 
