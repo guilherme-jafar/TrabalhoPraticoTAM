@@ -12,6 +12,42 @@
         tools:context=".MainActivity">
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:background="@color/purple_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="181dp"
+                android:layout_height="26dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="220dp"
+                android:layout_marginBottom="19dp"
+                android:text="trabalho pratico 3"
+                android:textColor="#F5FFFFFF"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="21dp"
+                android:onClick="settings"
+                app:srcCompat="@drawable/ic_baseline_settings_24" />
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/layoutPrincipal"
             android:layout_width="413dp"
@@ -20,8 +56,10 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -39,21 +77,21 @@
                     android:text="Nome: João Silva"
                     android:textSize="20sp" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/hora"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:text="Hora: 12:45"-->
-<!--                    android:textSize="20sp" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/hora"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:text="Hora: 12:45"-->
+                <!--                    android:textSize="20sp" />-->
                 <TextClock
                     android:id="@+id/textClockTime"
                     android:layout_width="88dp"
                     android:layout_height="wrap_content"
                     android:format12Hour="hh:mm a"
-                    android:timeZone="GMT+00:00"
                     android:paddingEnd="20sp"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:timeZone="GMT+00:00" />
             </LinearLayout>
 
             <LinearLayout

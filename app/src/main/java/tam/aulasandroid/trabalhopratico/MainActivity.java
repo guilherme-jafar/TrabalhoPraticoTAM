@@ -2,9 +2,11 @@ package tam.aulasandroid.trabalhopratico;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.preference.PreferenceManager;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,15 +37,20 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout backGroundAlimentacao;
     private int countThreads = 0;
     int numRefeicao = 0;
+    int buffer;
+    private TextView name;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      pref= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         setContentView(R.layout.activity_main);
         cal = Calendar.getInstance();
         hora = findViewById(R.id.textClockTime);
-
-
+        name=findViewById(R.id.textView9);
+        name.setText(pref.getString("nome","Joao Silva"));
+        buffer=Integer.parseInt(pref.getString("replay","15"));
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
 
@@ -110,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void settings(View v){
+        Intent i = new Intent(this, SettingsActivity.class);
+        i.putExtra("listaRefeicao", listaRefeicao);
+        startActivityForResult(i,3);
+    }
 
     public void change(){
 
@@ -165,9 +177,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+                name.setText(pref.getString("nome","Joao Silva"));
+                buffer=Integer.parseInt(pref.getString("replay","15"));
+
+
+
+
 
 
     }
+
 
 
     class ThreadVerificaTime extends Thread{
@@ -176,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
         //ThreadVerificaTime(int _counter){ counter = _counter;}
 
         public void run(){
+            name.setText(pref.getString("nome","Joao Silva"));
+            buffer=Integer.parseInt(pref.getString("replay","15"));
             countThreads++;
             while (true){
                 try {
@@ -183,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Date dateAtual = new Date();
 
-                    if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime()   >= 15*60*1000){
+                    if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime()   >= buffer*60*1000){
 
 
                         backGroundAlimentacao.post(new Runnable(){
@@ -207,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         });
-                    }else  if (dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= 15*60*1000){
+                    }else  if (dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= buffer*60*1000){
 
                         backGroundAlimentacao.post(new Runnable(){
 
