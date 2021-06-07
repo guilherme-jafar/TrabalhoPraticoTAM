@@ -19,13 +19,12 @@
 
         <LinearLayout
             android:id="@+id/layoutPrincipal"
-            android:layout_width="413dp"
+            android:layout_width="match_parent"
             android:layout_height="729dp"
             android:gravity="center|top"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
@@ -59,10 +58,9 @@
                     android:layout_height="wrap_content"
                     android:format12Hour="hh:mm a"
 
-                    android:timeZone="GMT+01:00"
                     android:paddingEnd="20sp"
                     android:textSize="20sp"
-                    />
+                    android:timeZone="GMT+01:00" />
             </LinearLayout>
 
             <LinearLayout
