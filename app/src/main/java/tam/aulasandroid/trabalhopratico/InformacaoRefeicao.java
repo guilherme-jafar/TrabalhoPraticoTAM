@@ -93,6 +93,9 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
         View view;
 
         // saves a course into the bundle as a Serializable
+        outState.putSerializable("visibilidadeSave", save.getVisibility());
+        outState.putSerializable("visibilidade", btnEdit.getVisibility());
+        outState.putSerializable("botaoEstado", refInfo.isEnabled());
         outState.putSerializable("refeicao",refeicaoInformacao);
         outState.putSerializable("hora",timePicker.getText().toString());
         outState.putSerializable("ref",refInfo.getText().toString());
@@ -102,6 +105,12 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
 
     public void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
+        save.setVisibility((Integer) outState.getSerializable("visibilidadeSave"));
+        cancel.setVisibility((Integer) outState.getSerializable("visibilidadeSave"));
+        btnEdit.setVisibility((Integer) outState.getSerializable("visibilidade"));
+        timePicker.setEnabled((Boolean) outState.getSerializable("botaoEstado"));
+        refInfo.setEnabled((Boolean) outState.getSerializable("botaoEstado"));
+        infoTxt.setEnabled((Boolean) outState.getSerializable("botaoEstado"));
         refeicaoInformacao=(Refeicao) outState.getSerializable("refeicaoListView");
         refInfo.setText(outState.getSerializable("ref").toString());
         infoTxt.setText(outState.getSerializable("info").toString());

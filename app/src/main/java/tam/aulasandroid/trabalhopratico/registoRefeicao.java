@@ -134,6 +134,7 @@ public class registoRefeicao extends AppCompatActivity {
 
         int selectedId = radioGroup.getCheckedRadioButtonId();
 
+
         radioButton = (RadioButton) findViewById(selectedId);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         if (horaEscolhida == null && radioButton.getText().toString().equalsIgnoreCase("realizada")) {
@@ -161,8 +162,6 @@ public class registoRefeicao extends AppCompatActivity {
                      String[] selectionArgs = new String[]{dataAtual,formatter.format(horaEscolhida)};
 
                      Cursor curRes = managedQuery(uriAll, null, selection, selectionArgs, null);
-
-                         System.out.println(curRes.getCount());
 
                          if (curRes.getCount()!=0) {
                          Toast.makeText(getApplicationContext(), "Hora não pode ser inferior a ultima refeicao!!", Toast.LENGTH_LONG).show();

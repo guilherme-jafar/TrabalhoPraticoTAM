@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -168,14 +169,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void mudarRefeicao(View v){
+    public void mudarRefeicao(View v) {
 
+        if (horaRefeicao.getText().equals("")) {
+            Toast.makeText(getApplicationContext(), "Nenhuma refeicao esta agendada", Toast.LENGTH_LONG).show();
+        } else{
 
-        Intent i = new Intent(this, registoRefeicao.class);
+            Intent i = new Intent(this, registoRefeicao.class);
         //System.out.println(listaRefeicao.get(numRefeicao));
         i.putExtra("Refeicao", listaRefeicao.get(numRefeicao));
-        startActivityForResult(i,2);
-
+        startActivityForResult(i, 2);
+    }
 
 
     }
@@ -187,12 +191,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void change(){
 
-        numRefeicao++;
-        if (numRefeicao >= listaRefeicao.size()){
-            numRefeicao = 0;
+        if(listaRefeicao.size() < 1){
+            nomeRefeicoa.setText("Não Tem Refeição");
+            horaRefeicao.setText("");
+        }else {
+            numRefeicao++;
+            if (numRefeicao >= listaRefeicao.size()) {
+                numRefeicao = 0;
+            }
+            nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
+            horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()));
         }
-        nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
-       horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
     }
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
