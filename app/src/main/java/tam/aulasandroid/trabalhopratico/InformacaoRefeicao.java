@@ -187,6 +187,10 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
         String selection = "id=?";
         String [] selectionArgs = new String[] { refeicaoInformacao.getId()};
         getContentResolver().delete(uri,selection,selectionArgs);
+        Uri uri2 = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
+        String selection2 = "idref=?";
+        String [] selectionArgs2 = new String[] { refeicaoInformacao.getId()};
+        getContentResolver().delete(uri2,selection2,selectionArgs2);
 
         Intent intent = new Intent(this, PlanoAlimentar.class);
         intent.putExtra("tipo","remover");

@@ -10,43 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity">
+        <include android:id="@+id/toolbar"
+            layout="@layout/toolbar"
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@color/purple_700"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="181dp"
-                android:layout_height="26dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="220dp"
-                android:layout_marginBottom="19dp"
-                android:text="trabalho pratico 3"
-                android:textColor="#F5FFFFFF"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="21dp"
-                android:onClick="settings"
-                app:srcCompat="@drawable/ic_baseline_settings_24" />
-        </RelativeLayout>
+            />
 
         <LinearLayout
             android:id="@+id/layoutPrincipal"
@@ -235,6 +204,12 @@
                         android:text="Histórico" />
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_settings_24" />
 
         </LinearLayout>
 

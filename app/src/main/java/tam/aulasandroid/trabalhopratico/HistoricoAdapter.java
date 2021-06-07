@@ -50,7 +50,11 @@ public class HistoricoAdapter extends BaseAdapter {
         // sets the TextView texts
         horaPrevista.setText(r.getHoraRefeicao());
         nomeRefeicao.setText(r.getNomeRefeicao());
-        realizada.setText(formatter.format(r.getHora()));
+        if(r.getHora()!=null) {
+            realizada.setText(formatter.format(r.getHora()));
+        }else{
+            realizada.setText("xxx");
+        }
 
         // returns the view
         return rowView;

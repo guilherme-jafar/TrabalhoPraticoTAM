@@ -35,20 +35,25 @@ public class InformacaoHistoricoRefeicao extends AppCompatActivity {
         if (dados != null){
             RegistroAlimentar historicoRef = (RegistroAlimentar) dados.get("informacaoRefeicaoHistorico");
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
-            horaPrevistaHist.setText(formatter.format(historicoRef.getHora()) );
-
+            if(historicoRef.getHora()!=null) {
+                horaRealizadaHist.setText(formatter.format(historicoRef.getHora()));
+            }else{
+                horaRealizadaHist.setText("xxx");
+            }
             observacaoHist.setText(historicoRef.getObs());
             Log.e(TAG, historicoRef.getRefId());
             nomeRefeicaoHist.setText(historicoRef.getNomeRefeicao());
-            horaRealizadaHist.setText(historicoRef.getHoraRefeicao());
+            horaPrevistaHist.setText(historicoRef.getHoraRefeicao());
 
+
+            Log.e("historivo",String.valueOf(historicoRef.isEstado())  );
             if (historicoRef.isEstado()){
                 radioButtonRealizadaHist.setChecked(true);
                 radioButtonNaoRealizadaHist.setChecked(false);
                 radioButtonRealizadaHist.setEnabled(false);
                 radioButtonNaoRealizadaHist.setEnabled(false);
             }else {
-                radioButtonNaoRealizadaHist.setActivated(true);
+                radioButtonNaoRealizadaHist.setChecked(true);
                 radioButtonRealizadaHist.setChecked(false);
                 radioButtonRealizadaHist.setEnabled(false);
                 radioButtonNaoRealizadaHist.setEnabled(false);

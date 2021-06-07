@@ -211,10 +211,18 @@ public class contentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-                 db.delete(
-                "refeicao",       // table
-                selection,      // where clause
-                selectionArgs);
+        if (uri.toString().contains("historico")) {
+            db.delete(
+                    "historico",       // table
+                    selection,      // where clause
+                    selectionArgs);  // initial values
+
+        }else {
+            db.delete(
+                    "refeicao",       // table
+                    selection,      // where clause
+                    selectionArgs);
+        }
 
         return 0;
     }

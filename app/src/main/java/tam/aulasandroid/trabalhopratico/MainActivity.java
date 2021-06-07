@@ -1,7 +1,9 @@
 package tam.aulasandroid.trabalhopratico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 
 
 import android.content.ContentValues;
@@ -15,6 +17,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -66,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
 
         getAllRefeicao();
-
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         cal.set(Calendar.HOUR_OF_DAY, 18);
         cal.set(Calendar.MINUTE, 45);
@@ -88,13 +93,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+      getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       int id=item.getItemId();
+       View v = getCurrentFocus();
+       if (id==R.id.menu){
+           settings(v);
+       }
 
-
-
-
-
+        return super.onOptionsItemSelected(item);
     }
 
     public void getAllRefeicao(){

@@ -149,7 +149,9 @@ public class HistoricoAlimentar extends AppCompatActivity {
 
                     try {
 
-                        hora = new SimpleDateFormat("HH:mm").parse(curRes.getString(3));
+                        if(curRes.getString(3)!=null) {
+                            hora = new SimpleDateFormat("HH:mm").parse(curRes.getString(3));
+                        }
                         dia = new SimpleDateFormat("dd/MM/yyyy").parse(curRes.getString(4));
 
                     } catch (java.text.ParseException e) {
