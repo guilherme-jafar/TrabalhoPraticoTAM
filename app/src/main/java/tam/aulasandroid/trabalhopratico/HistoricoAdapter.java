@@ -1,6 +1,8 @@
 package tam.aulasandroid.trabalhopratico;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class HistoricoAdapter extends BaseAdapter {
-
+    String TAG = "Hisdtorio adapter";
     Context context;
     List<RegistroAlimentar> adaptHistorico;
 
@@ -46,8 +48,8 @@ public class HistoricoAdapter extends BaseAdapter {
         RegistroAlimentar r = adaptHistorico.get(position);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         // sets the TextView texts
-        horaPrevista.setText(formatter.format(r.getHora()));
-        nomeRefeicao.setText("Refeicao");
+        horaPrevista.setText(r.getHoraRefeicao());
+        nomeRefeicao.setText(r.getNomeRefeicao());
         realizada.setText(formatter.format(r.getHora()));
 
         // returns the view
@@ -71,5 +73,6 @@ public class HistoricoAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
 
 }

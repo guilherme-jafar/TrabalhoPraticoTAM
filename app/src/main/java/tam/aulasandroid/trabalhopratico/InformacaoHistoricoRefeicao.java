@@ -2,39 +2,45 @@ package tam.aulasandroid.trabalhopratico;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class InformacaoHistoricoRefeicao extends AppCompatActivity {
 
-    private TextView horaPrevistaHist,nomeRefeicaoHist, observacaoHist, horaRealizadaHist;
-    private RegistroAlimentar historicoRef;
-    private RadioButton radioButtonNaoRealizadaHist, radioButtonRealizadaHist;
+    String TAG = "Infomracao historico";
+    private TextView horaRealizadaHist;
+    private  TextView nomeRefeicaoHist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacao_historico_refeicao);
 
-        horaPrevistaHist = findViewById(R.id.horaPrevistaHist);
+        TextView horaPrevistaHist = findViewById(R.id.horaPrevistaHist);
         nomeRefeicaoHist = findViewById(R.id.nomeRefeicaoHist);
-        observacaoHist = findViewById(R.id.observacaoHist);
+        TextView observacaoHist = findViewById(R.id.observacaoHist);
         horaRealizadaHist = findViewById(R.id.horaRealizadaHist);
-        radioButtonRealizadaHist = findViewById(R.id.radioButtonRealizadaHist);
-        radioButtonNaoRealizadaHist = findViewById(R.id.radioButtonNaoRealizadaHist);
+        RadioButton radioButtonRealizadaHist = findViewById(R.id.radioButtonRealizadaHist);
+        RadioButton radioButtonNaoRealizadaHist = findViewById(R.id.radioButtonNaoRealizadaHist);
 
         Bundle dados = getIntent().getExtras();
         if (dados != null){
-            historicoRef = (RegistroAlimentar) dados.get("informacaoRefeicaoHistorico");
+            RegistroAlimentar historicoRef = (RegistroAlimentar) dados.get("informacaoRefeicaoHistorico");
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
             horaPrevistaHist.setText(formatter.format(historicoRef.getHora()) );
-            nomeRefeicaoHist.setText("Nome da refeicao");
+
             observacaoHist.setText(historicoRef.getObs());
-            horaRealizadaHist.setText(formatter.format(historicoRef.getHora()));
+            Log.e(TAG, historicoRef.getRefId());
+            nomeRefeicaoHist.setText(historicoRef.getNomeRefeicao());
+            horaRealizadaHist.setText(historicoRef.getHoraRefeicao());
 
             if (historicoRef.isEstado()){
                 radioButtonRealizadaHist.setChecked(true);
@@ -53,6 +59,8 @@ public class InformacaoHistoricoRefeicao extends AppCompatActivity {
 
 
     }
+
+
 
 
 }

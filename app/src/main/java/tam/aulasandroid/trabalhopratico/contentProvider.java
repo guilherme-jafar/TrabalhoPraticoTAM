@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
@@ -23,7 +24,7 @@ public class contentProvider extends ContentProvider {
     static final String PATH2 =	"historico";
     static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH);
     static final Uri CONTENT_URI2 = Uri.parse("content://"+ PROVIDER_NAME + "/" + PATH2);
-    String TAG = "";
+    String TAG = "ContentProvider";
     DatabaseHelper dbHelper;
 
     // this is the database stuff
@@ -96,7 +97,7 @@ public class contentProvider extends ContentProvider {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_CREATE);
             db.execSQL(SQL_CREATE2);
-            Log.d(TAG, "Table contacts created");
+            Log.d(TAG, "Table created");
         }
 
         @Override
@@ -104,7 +105,7 @@ public class contentProvider extends ContentProvider {
             db.execSQL(SQL_DROP);
             db.execSQL(SQL_DROP2);
             onCreate(db);
-            Log.d(TAG, "Table contacts recreated");
+            Log.d(TAG, "Table recreated");
         }
     }
 
@@ -142,8 +143,47 @@ public class contentProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
+        SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
 
-        return null;
+
+
+
+        if (uri.getPath().contains(DB_TABLE2)){
+            sqlBuilder.setTables(DB_TABLE2);
+
+        }else if (uri.getPath().contains(DB_TABLE)){
+            sqlBuilder.setTables(DB_TABLE);
+
+
+
+        }
+
+
+//        Log.e(TAG, uriMatcher.);
+
+//        if (selection != null){
+//            Log.e(TAG,  selectionArgs[0]);
+//            sqlBuilder.appendWhere(
+//                    "id" + " = " + selectionArgs[0]);
+//        }
+
+//        if (uriMatcher.match(uri) == CONTACT_ID)
+//            //---if getting a particular contact---
+//
+
+
+        Cursor c = sqlBuilder.query(
+                db,
+                projection,       // resultset columns/fields
+                selection,        // selection
+                selectionArgs,    // selection arguments
+                null,             // groupBy
+                null,             // having
+                sortOrder);       // orderby
+
+        //---register to watch a content URI for changes---
+        c.setNotificationUri(getContext().getContentResolver(), uri);
+        return c;
     }
 
     @Nullable

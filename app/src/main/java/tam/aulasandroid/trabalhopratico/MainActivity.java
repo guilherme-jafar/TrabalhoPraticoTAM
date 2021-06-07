@@ -65,26 +65,28 @@ public class MainActivity extends AppCompatActivity {
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 12);
-        cal.set(Calendar.MINUTE, 45);
-        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(), cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
-        cal.set(Calendar.HOUR_OF_DAY, 16);
-        cal.set(Calendar.MINUTE, 45);
+        getAllRefeicao();
 
-        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Lanche", "xdfd"));
-
-        cal.set(Calendar.HOUR_OF_DAY, 15);
-        cal.set(Calendar.MINUTE, 1);
-
-
-        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Jantar", "xdfd"));
-
-
-        cal.set(Calendar.HOUR_OF_DAY, 17);
-        cal.set(Calendar.MINUTE, 45);
-        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Lanche", "xdfd"));
-
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.HOUR_OF_DAY, 12);
+//        cal.set(Calendar.MINUTE, 45);
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(), cal.getTime(), "Almoço", "xdfd fghfg sdgbdb sbfbuiewb uwebfuwbrf fubwhferuhf gbuihuiheshf bfbrbeuygbieuwf"));
+//        cal.set(Calendar.HOUR_OF_DAY, 16);
+//        cal.set(Calendar.MINUTE, 45);
+//
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Lanche", "xdfd"));
+//
+//        cal.set(Calendar.HOUR_OF_DAY, 15);
+//        cal.set(Calendar.MINUTE, 1);
+//
+//
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Jantar", "xdfd"));
+//
+//
+//        cal.set(Calendar.HOUR_OF_DAY, 17);
+//        cal.set(Calendar.MINUTE, 45);
+//        listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Lanche", "xdfd"));
+//
         cal.set(Calendar.HOUR_OF_DAY, 18);
         cal.set(Calendar.MINUTE, 45);
         listaRefeicao.add(new Refeicao(UUID.randomUUID().toString(),cal.getTime(), "Almoço", "xdfd"));
@@ -100,15 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
         new ThreadVerificaTime().start();
 
-        getAllRefeicao();
+
 
     }
 
     public void getAllRefeicao(){
-        Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
+        Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
 
         Cursor curRes = managedQuery(uriAll, null, null, null, null);
-        Log.e(TAG, "Vazio");
+
         if(curRes!=null){
             if(curRes.getCount()==0){
                 Log.e(TAG, "Vazio");
@@ -118,10 +120,27 @@ public class MainActivity extends AppCompatActivity {
 
             curRes.moveToFirst();
             while(!curRes.isAfterLast()){
-                Log.e(TAG, curRes.getString(1) + "  -  " + curRes.getString(2) + "\n" );
+                Log.e(TAG, curRes.getString(0) + "  -  " + curRes.getString(1) +  " - "+curRes.getString(2) + "  -  " + curRes.getString(3)+  "\n" );
 //                sb.append(curRes.getString(1) + "  -  " + curRes.getString(2) + "\n" );
+
+                Date date =null;
+
+                try {
+                    date=new SimpleDateFormat("HH:mm").parse(curRes.getString(1));
+                }catch (java.text.ParseException e){
+                    Log.e(TAG, e.toString());
+                }
+                Refeicao refeicao = new Refeicao(curRes.getString(0),date,curRes.getString(2),curRes.getString(3));
+                Log.e(TAG, refeicao.toString());
+                listaRefeicao.add(refeicao);
+                Log.e(TAG, listaRefeicao.toString());
+
+
+
                 curRes.moveToNext();
             }
+
+
 
         }
 

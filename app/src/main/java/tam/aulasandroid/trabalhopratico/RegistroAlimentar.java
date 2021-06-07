@@ -12,6 +12,8 @@ public class RegistroAlimentar implements Serializable  {
     private Date data;
     private Date hora;
     private String obs;
+    private  String nomeRefeicao;
+    private String horaRefeicao;
 
     public RegistroAlimentar(String id, String refId, boolean estado, Date hora, String obs) {
         this.id = id;
@@ -67,5 +69,35 @@ public class RegistroAlimentar implements Serializable  {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public String getNomeRefeicao() {
+        return nomeRefeicao;
+    }
+
+    public void setNomeRefeicao(String nomeRefeicao) {
+        this.nomeRefeicao = nomeRefeicao;
+    }
+
+    public String getHoraRefeicao() {
+        return horaRefeicao;
+    }
+
+    public void setHoraRefeicao(String horaRefeicao) {
+        this.horaRefeicao = horaRefeicao;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistroAlimentar{" +
+                "id='" + id + '\'' +
+                ", refId='" + refId + '\'' +
+                ", estado=" + estado +
+                ", data=" + data +
+                ", hora=" + hora +
+                ", obs='" + obs + '\'' +
+                ", nomeRefeicao='" + nomeRefeicao + '\'' +
+                ", horaRefeicao='" + horaRefeicao + '\'' +
+                '}';
     }
 }

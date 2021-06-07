@@ -3,7 +3,10 @@ package tam.aulasandroid.trabalhopratico;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -15,6 +18,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -27,13 +31,14 @@ public class HistoricoAlimentar extends AppCompatActivity {
     ListAdapter adapter;
     String TAG = "Historio Alimentar";
     private TextView dataHistorico;
+    RegistroAlimentar registroAlimentar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico_alimentar);
         Format formatter2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
+        listaHistorico = new ArrayList<RegistroAlimentar>();
         dataHistorico = findViewById(R.id.dataHistorico);
         dataHistorico.setText(formatter2.format(Calendar.getInstance().getTime()));
 
@@ -48,11 +53,11 @@ public class HistoricoAlimentar extends AppCompatActivity {
         cal.set(Calendar.MINUTE, 45);
 
 
-
+        getAllhistorico();
 
         RegistroAlimentar h1 = new RegistroAlimentar(UUID.randomUUID().toString(),"1",true, cal.getTime(), "sdjkdfbvdfbvjkbjkdfbvbfdvbkjbfdbvbdkfvbkbvkjbfmfsdmf");
 
-        listaHistorico = new ArrayList<RegistroAlimentar>();
+
         listaHistorico.add(h1);
         adapter = new HistoricoAdapter(this, listaHistorico);
         historioListView = (ListView) findViewById(R.id.lista_historico);
@@ -71,5 +76,75 @@ public class HistoricoAlimentar extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void getAllhistorico(){
+        Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/historico");
+
+        Cursor curRes = managedQuery(uriAll, null, null, null, null);
+
+        if(curRes!=null){
+            if(curRes.getCount()==0){
+                Log.e(TAG, "Vazio");
+                return;
+            }
+            StringBuilder sb = new StringBuilder();
+
+            curRes.moveToFirst();
+            while(!curRes.isAfterLast()){
+                Log.e(TAG, curRes.getString(0) + "  -  " + curRes.getString(1) +  " - "+curRes.getString(2) + "  -  " + curRes.getString(3) + " - " + curRes.getString(4) +  " - "+curRes.getString(5)+"\n" );
+
+                Date hora = null;
+                Date dia = null;
+
+                try {
+
+                    hora=new SimpleDateFormat("HH:mm").parse(curRes.getString(3));
+                    dia = new SimpleDateFormat("dd/MM/yyyy").parse(curRes.getString(4));
+
+                }catch (java.text.ParseException e){
+                    Log.e(TAG, e.toString());
+                }
+                registroAlimentar = new RegistroAlimentar(curRes.getString(0),curRes.getString(1),(curRes.getString(2).equalsIgnoreCase("1")) , hora,curRes.getString(5));
+                registroAlimentar.setData(dia);
+                getRefeicao(curRes.getString(1));
+
+                listaHistorico.add(registroAlimentar);
+                Log.e(TAG, listaHistorico.toString());
+
+
+
+                curRes.moveToNext();
+            }
+
+
+
+        }
+
+    }
+
+    public void getRefeicao(String idRefeicao){
+        Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
+        String [] projection = new String[]{"hora", "refeicao"};
+        String selection = "id=?";
+        String [] selectionArgs = new String[]{idRefeicao};
+
+        Cursor curRes = managedQuery(uriAll, projection, selection, selectionArgs, null);
+
+        Log.e(TAG, idRefeicao);
+        Log.e(TAG, String.valueOf(curRes.getCount()));
+
+        if(curRes.getCount()>=1){
+            curRes.moveToFirst();
+            Log.e(TAG,curRes.getString(0));
+            Log.e(TAG,curRes.getString(1));
+            registroAlimentar.setHoraRefeicao(curRes.getString(0));
+            registroAlimentar.setNomeRefeicao(curRes.getString(1));
+
+
+
+        }
+
+
     }
 }
