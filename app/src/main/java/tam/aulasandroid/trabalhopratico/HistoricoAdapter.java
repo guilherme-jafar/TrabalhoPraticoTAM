@@ -74,5 +74,10 @@ public class HistoricoAdapter extends BaseAdapter {
         return position;
     }
 
+    public void clearData() {
+        // clear the data
+        adaptHistorico.clear();
+    }
+
 
 }
