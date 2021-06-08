@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity">
-        <include android:id="@+id/toolbar"
-            layout="@layout/toolbar"
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
 
 
             />
@@ -202,12 +203,6 @@
                         android:text="Histórico" />
                 </LinearLayout>
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_settings_24" />
 
         </LinearLayout>
 

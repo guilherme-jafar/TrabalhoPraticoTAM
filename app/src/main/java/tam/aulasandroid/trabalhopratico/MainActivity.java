@@ -54,24 +54,23 @@ public class MainActivity extends AppCompatActivity {
     //private contentProvider contentProvider;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      pref= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         setContentView(R.layout.activity_main);
         cal = Calendar.getInstance();
         hora = findViewById(R.id.textClockTime);
 
-        name=findViewById(R.id.textView9);
-        name.setText(pref.getString("nome","Escolha "));
-        buffer=Integer.parseInt(pref.getString("replay","15"));
+        name = findViewById(R.id.textView9);
+        name.setText(pref.getString("nome", "Escolha "));
+        buffer = Integer.parseInt(pref.getString("replay", "15"));
 
         formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
         backGroundAlimentacao = findViewById(R.id.backGroundAlimentacao);
 
         getAllRefeicao();
-        Toolbar toolbar =findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         cal.set(Calendar.HOUR_OF_DAY, 18);
@@ -82,70 +81,67 @@ public class MainActivity extends AppCompatActivity {
         horaRefeicao = findViewById(R.id.horaRefeicao);
 
 
-        if (listaRefeicao.size() >= 1){
+        if (listaRefeicao.size() >= 1) {
             nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
-            horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+            horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()));
             Collections.sort(listaRefeicao);
             new ThreadVerificaTime().start();
-        }else {
+        } else {
             nomeRefeicoa.setText("Não Tem Refeição");
             horaRefeicao.setText("");
         }
 
 
-
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-      getMenuInflater().inflate(R.menu.menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-       int id=item.getItemId();
-       View v = getCurrentFocus();
-       if (id==R.id.menu){
-           settings(v);
-       }
+        int id = item.getItemId();
+        View v = getCurrentFocus();
+        if (id == R.id.menu) {
+            settings(v);
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void getAllRefeicao(){
+    public void getAllRefeicao() {
         Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
 
         Cursor curRes = managedQuery(uriAll, null, null, null, null);
 
-        if(curRes!=null){
-            if(curRes.getCount()==0){
+        if (curRes != null) {
+            if (curRes.getCount() == 0) {
                 Log.e(TAG, "Vazio");
                 return;
             }
             StringBuilder sb = new StringBuilder();
 
             curRes.moveToFirst();
-            while(!curRes.isAfterLast()){
-                Log.e(TAG, curRes.getString(0) + "  -  " + curRes.getString(1) +  " - "+curRes.getString(2) + "  -  " + curRes.getString(3)+  "\n" );
+            while (!curRes.isAfterLast()) {
+                Log.e(TAG, curRes.getString(0) + "  -  " + curRes.getString(1) + " - " + curRes.getString(2) + "  -  " + curRes.getString(3) + "\n");
 //                sb.append(curRes.getString(1) + "  -  " + curRes.getString(2) + "\n" );
 
-                Date date =null;
+                Date date = null;
 
                 try {
-                    date=new SimpleDateFormat("HH:mm").parse(curRes.getString(1));
-                }catch (java.text.ParseException e){
+                    date = new SimpleDateFormat("HH:mm").parse(curRes.getString(1));
+                } catch (java.text.ParseException e) {
                     Log.e(TAG, e.toString());
                 }
-                Refeicao refeicao = new Refeicao(curRes.getString(0),date,curRes.getString(2),curRes.getString(3));
+                Refeicao refeicao = new Refeicao(curRes.getString(0), date, curRes.getString(2), curRes.getString(3));
                 Log.e(TAG, refeicao.toString());
                 listaRefeicao.add(refeicao);
                 Log.e(TAG, listaRefeicao.toString());
 
 
-
                 curRes.moveToNext();
             }
-
 
 
         }
@@ -153,15 +149,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void planoAlimentarView(View v){
+    public void planoAlimentarView(View v) {
 
         Intent i = new Intent(this, PlanoAlimentar.class);
         i.putExtra("listaRefeicao", listaRefeicao);
-        startActivityForResult(i,1);
+        startActivityForResult(i, 1);
 
     }
 
-    public void historicoAlimentarView(View v){
+    public void historicoAlimentarView(View v) {
 
         Intent i = new Intent(this, HistoricoAlimentar.class);
 
@@ -173,28 +169,29 @@ public class MainActivity extends AppCompatActivity {
 
         if (horaRefeicao.getText().equals("")) {
             Toast.makeText(getApplicationContext(), "Nenhuma refeicao esta agendada", Toast.LENGTH_LONG).show();
-        } else{
+        } else {
 
             Intent i = new Intent(this, registoRefeicao.class);
-        //System.out.println(listaRefeicao.get(numRefeicao));
-        i.putExtra("Refeicao", listaRefeicao.get(numRefeicao));
-        startActivityForResult(i, 2);
-    }
+            //System.out.println(listaRefeicao.get(numRefeicao));
+            i.putExtra("Refeicao", listaRefeicao.get(numRefeicao));
+            startActivityForResult(i, 2);
+        }
 
 
     }
-    public void settings(View v){
+
+    public void settings(View v) {
         Intent i = new Intent(this, SettingsActivity.class);
         i.putExtra("listaRefeicao", listaRefeicao);
-        startActivityForResult(i,3);
+        startActivityForResult(i, 3);
     }
 
-    public void change(){
+    public void change() {
 
-        if(listaRefeicao.size() < 1){
+        if (listaRefeicao.size() < 1) {
             nomeRefeicoa.setText("Não Tem Refeição");
             horaRefeicao.setText("");
-        }else {
+        } else {
             numRefeicao++;
             if (numRefeicao >= listaRefeicao.size()) {
                 numRefeicao = 0;
@@ -203,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()));
         }
     }
+
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState");
@@ -214,10 +212,10 @@ public class MainActivity extends AppCompatActivity {
     public void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
 
-        numRefeicao =  outState.getInt("numRefeicao");
+        numRefeicao = outState.getInt("numRefeicao");
         Log.e(TAG, "onRestoreInstanceState: " + numRefeicao);
         nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
-        horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+        horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()));
         // retrieves the course from the bundle
 
     }
@@ -227,18 +225,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
 
             if (resultCode == RESULT_OK) {
-                if (data != null){
+                if (data != null) {
 
                     listaRefeicao = (ArrayList<Refeicao>) data.getExtras().getSerializable("listaRefeicaoBack");
                     Collections.sort(listaRefeicao);
                     nomeRefeicoa.setText(listaRefeicao.get(numRefeicao).getRefeicao());
-                    horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()) );
+                    horaRefeicao.setText(formatter.format(listaRefeicao.get(numRefeicao).getHora()));
                 }
 
 
             }
         }
-        if(requestCode==2){
+        if (requestCode == 2) {
 
             if (data != null) {
                 if (data.getStringExtra("estado").equalsIgnoreCase("salvar")) {
@@ -248,37 +246,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-                name.setText(pref.getString("nome","Joao Silva"));
-                buffer=Integer.parseInt(pref.getString("replay","15"));
-
-
-
-
+        name.setText(pref.getString("nome", "Joao Silva"));
+        buffer = Integer.parseInt(pref.getString("replay", "15"));
 
 
     }
 
 
-
-    class ThreadVerificaTime extends Thread{
+    class ThreadVerificaTime extends Thread {
         int counter;
 
         //ThreadVerificaTime(int _counter){ counter = _counter;}
 
-        public void run(){
-            name.setText(pref.getString("nome","Joao Silva"));
+        public void run() {
+            name.setText(pref.getString("nome", "Joao Silva"));
 
             countThreads++;
-            while (true){
+            while (true) {
                 try {
 
 
                     Date dateAtual = new Date();
 
-                    if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime()   >= buffer*60*1000){
+                    if (listaRefeicao.get(numRefeicao).getHora().getTime() - dateAtual.getTime() >= buffer * 60 * 1000) {
 
 
-                        backGroundAlimentacao.post(new Runnable(){
+                        backGroundAlimentacao.post(new Runnable() {
 
                             @Override
                             public void run() {
@@ -287,10 +280,10 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         });
-                    }else if (listaRefeicao.get(numRefeicao).getHora().compareTo(dateAtual)  < 0){
+                    } else if (listaRefeicao.get(numRefeicao).getHora().compareTo(dateAtual) < 0) {
 
 
-                        backGroundAlimentacao.post(new Runnable(){
+                        backGroundAlimentacao.post(new Runnable() {
 
                             @Override
                             public void run() {
@@ -299,9 +292,9 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         });
-                    }else  if (dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= buffer*60*1000){
+                    } else if (dateAtual.getTime() - listaRefeicao.get(numRefeicao).getHora().getTime() <= buffer * 60 * 1000) {
 
-                        backGroundAlimentacao.post(new Runnable(){
+                        backGroundAlimentacao.post(new Runnable() {
 
                             @Override
                             public void run() {
@@ -311,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
 
                         });
                     }
-                    buffer=Integer.parseInt(pref.getString("reply","15"));
+                    buffer = Integer.parseInt(pref.getString("reply", "15"));
 
                     Thread.sleep(1000);
 
@@ -321,8 +314,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
 }
