@@ -175,6 +175,9 @@ public class PlanoAlimentar extends AppCompatActivity {
                 if (data.getStringExtra("tipo").equalsIgnoreCase("remover")) {
                     Refeicao refeicao = (Refeicao) data.getSerializableExtra("EliminarRefeicao");
 
+                    Log.e("erroEliminar", refeicao.toString());
+                    Log.e("erroEliminar - 2", listaRefeicao.toString());
+
                     for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
                         Refeicao obj = iterator.next();
                         if (obj.getId().equalsIgnoreCase(refeicao.getId())) {

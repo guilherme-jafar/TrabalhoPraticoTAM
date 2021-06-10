@@ -144,7 +144,7 @@ public class contentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
-
+        Cursor c;
 
 
 
@@ -159,32 +159,40 @@ public class contentProvider extends ContentProvider {
         }
 
 
-//        Log.e(TAG, uriMatcher.);
 
-//        if (selection != null){
-//            Log.e(TAG,  selectionArgs[0]);
-//            sqlBuilder.appendWhere(
-//                    "id" + " = " + selectionArgs[0]);
-//        }
+        if (selection != null ){
+            if (selection.equalsIgnoreCase("refeicaoMain")){
+                 c = db.rawQuery("SELECT * FROM refeicao WHERE id not in (SELECT idref FROM historico WHERE dia = ?)", selectionArgs);       // orderby
+            }else {
+                 c = sqlBuilder.query(
+                        db,
+                        projection,       // resultset columns/fields
+                        selection,        // selection
+                        selectionArgs,    // selection arguments
+                        null,             // groupBy
+                        null,             // having
+                        sortOrder);       // orderby
+            }
 
-//        if (uriMatcher.match(uri) == CONTACT_ID)
-//            //---if getting a particular contact---
-//
+        }else{
+             c = sqlBuilder.query(
+                    db,
+                    projection,       // resultset columns/fields
+                    null,        // selection
+                    selectionArgs,    // selection arguments
+                    null,             // groupBy
+                    null,             // having
+                    sortOrder);       // orderby
+        }
 
 
-        Cursor c = sqlBuilder.query(
-                db,
-                projection,       // resultset columns/fields
-                selection,        // selection
-                selectionArgs,    // selection arguments
-                null,             // groupBy
-                null,             // having
-                sortOrder);       // orderby
 
         //---register to watch a content URI for changes---
         c.setNotificationUri(getContext().getContentResolver(), uri);
         return c;
     }
+
+
 
     @Nullable
     @Override

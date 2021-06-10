@@ -91,6 +91,6 @@ public class Refeicao implements Serializable, Comparable<Refeicao>{
                 "hora='" + hora + '\'' +
                 ", refeicao='" + refeicao + '\'' +
                 ", informacao='" + informacao + '\'' +
-                '}';
+                ", id='" + id + '\'' ;
     }
 }
