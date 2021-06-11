@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             horaRefeicao.setText(formatter.format(listaRefeicaoMain.get(0).getHora()));
             Log.e("Passou aqui MAIN - ", listaRefeicaoMain.get(0).toString());
 
-            new ThreadVerificaTime().start();
+
         } else if (listaRefeicaoMain.size() == 0 && listaRefeicao.size() == 0){
             nomeRefeicoa.setText("Não Tem Refeição");
             horaRefeicao.setText("");
@@ -122,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
     public void getAllRefeicao() {
         listaRefeicao.clear();
         Uri uriAll = Uri.parse("content://tam.aulasandroid.trabalhopratico.refeicao/refeicao");
-
+        String dataAtual;
+        Format formatter2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        dataAtual = formatter2.format(Calendar.getInstance().getTime());
         Cursor curRes = managedQuery(uriAll, null, null, null, null);
 
         if (curRes != null) {
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Vazio");
                 return;
             }
-            StringBuilder sb = new StringBuilder();
+
 
             curRes.moveToFirst();
             while (!curRes.isAfterLast()) {
@@ -140,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 Date date = null;
 
                 try {
-                    date = new SimpleDateFormat("HH:mm").parse(curRes.getString(1));
+                    date = new SimpleDateFormat("HH:mm dd/MM/yyyy").parse(curRes.getString(1) +" "+ dataAtual);
+//                    date = new SimpleDateFormat("HH:mm").parse(curRes.getString(1));
                 } catch (java.text.ParseException e) {
                     Log.e(TAG, e.toString());
                 }
@@ -179,7 +182,9 @@ public class MainActivity extends AppCompatActivity {
         if (curRes != null) {
             if (curRes.getCount() == 0) {
                 Log.e(TAG, "Vazio");
+
             }else{
+                new ThreadVerificaTime().start();
                 curRes.moveToFirst();
                 while (!curRes.isAfterLast()) {
                     Log.e(TAG, curRes.getString(0) + "  -  " + curRes.getString(1) + " - " + curRes.getString(2) + "  -  " + curRes.getString(3) + "\n");

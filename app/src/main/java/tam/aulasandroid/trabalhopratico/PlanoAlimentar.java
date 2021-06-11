@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Locale;
@@ -150,6 +151,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 
                 if (check(refeicao)) {
                     listaRefeicao.add(refeicao);
+                    Collections.sort(listaRefeicao);
                     ContentValues values = new ContentValues();
                     values.put("id",refeicao.getId());
                     values.put("hora",formatter.format(refeicao.getHora()));
@@ -160,7 +162,7 @@ public class PlanoAlimentar extends AppCompatActivity {
 
                 }
 
-                Collections.sort(listaRefeicao);
+
                 RefeicaoAdapater adapater = (RefeicaoAdapater) refeicaoListView.getAdapter();
                 adapater.notifyDataSetChanged();
                 Intent resInt = new Intent();
@@ -168,6 +170,15 @@ public class PlanoAlimentar extends AppCompatActivity {
                 b.putSerializable("plano", listaRefeicao);
                 resInt.putExtra("bundle", b);
                 setResult(RESULT_OK, resInt);
+                Collections.sort(listaRefeicao);
+                Log.e(TAG + "0", listaRefeicao.toString());
+                if (!listaRefeicao.isEmpty()){
+                    Log.e(TAG + "1", listaRefeicao.toString());
+                    adapter = new RefeicaoAdapater(this, listaRefeicao);
+                    refeicaoListView = (ListView) findViewById(R.id.lista_historico);
+                    refeicaoListView.setAdapter(adapter);
+                    refeicaoListView.setTextFilterEnabled(true);
+                }
             }
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
@@ -198,6 +209,7 @@ public class PlanoAlimentar extends AppCompatActivity {
                 } else if (data.getStringExtra("tipo").equalsIgnoreCase("alterar")) {
                     Refeicao refeicao = (Refeicao) data.getSerializableExtra("AlterarRefeicao");
                     if (check(refeicao)) {
+
                         for (Iterator<Refeicao> iterator = listaRefeicao.iterator(); iterator.hasNext(); ) {
                             Refeicao obj = iterator.next();
                             if (obj.getId().equalsIgnoreCase(refeicao.getId())) {
@@ -208,6 +220,7 @@ public class PlanoAlimentar extends AppCompatActivity {
                             }
                         }
                         listaRefeicao.add(refeicao);
+                        Collections.sort(listaRefeicao);
                     }
 
 //                    System.out.println(refeicao.getHora());
@@ -223,8 +236,19 @@ public class PlanoAlimentar extends AppCompatActivity {
                 b.putSerializable("plano", listaRefeicao);
                 resInt.putExtra("bundle", b);
                 setResult(RESULT_OK, resInt);
+                Collections.sort(listaRefeicao);
+                Log.e(TAG + "3", listaRefeicao.toString());
+                if (!listaRefeicao.isEmpty()){
+                    Log.e(TAG + "4", listaRefeicao.toString());
+                    adapter = new RefeicaoAdapater(this, listaRefeicao);
+                    refeicaoListView = (ListView) findViewById(R.id.lista_historico);
+                    refeicaoListView.setAdapter(adapter);
+                    refeicaoListView.setTextFilterEnabled(true);
+                }
             }
         }
+
+
     }
 
 

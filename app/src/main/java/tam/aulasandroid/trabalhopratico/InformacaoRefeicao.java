@@ -144,7 +144,7 @@ public class InformacaoRefeicao extends AppCompatActivity implements DialogDelet
             values.put("hora",formatter.format(refeicaoInformacao.getHora()));
             values.put("refeicao",refeicaoInformacao.getRefeicao());
             values.put("informacao",refeicaoInformacao.getInformacao());
-            Uri urisave = getContentResolver().insert(uri, values);
+            int numUpdate = getContentResolver().update(uri, values, selection, selectionArgs);
             Intent intent = new Intent(this, PlanoAlimentar.class);
             intent.putExtra("tipo","alterar");
             intent.putExtra("AlterarRefeicao", refeicaoInformacao);
